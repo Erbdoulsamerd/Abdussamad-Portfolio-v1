@@ -1,0 +1,448 @@
+@charset "UTF-8";
+/* ============================================================
+   TEN ART DIRECTIONS — live previews
+   Each stage is authored at a fixed 1280×800 and scaled to fit,
+   so a card and a fullscreen view are identical compositions.
+   ============================================================ */
+
+/* ---------- SHELL ---------- */
+.dirs { display: grid; gap: clamp(48px, 7vw, 110px); }
+
+.dcard { display: grid; grid-template-columns: 300px 1fr; gap: clamp(24px, 3.4vw, 56px); align-items: start; }
+@media (max-width: 1080px) { .dcard { grid-template-columns: 1fr; gap: 24px; } }
+
+.dcard-info .n {
+  font-family: var(--f-display); font-weight: 700; font-size: clamp(2.6rem, 5vw, 4rem);
+  line-height: .85; letter-spacing: -.05em; color: var(--accent); display: block; margin-bottom: 12px;
+}
+.dcard-info h3 { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.5rem, 2.4vw, 2rem);
+                 line-height: 1; letter-spacing: -.035em; margin-bottom: 14px; }
+.dcard-info p { color: var(--fg-2); line-height: 1.55; font-size: .94rem; }
+.dtags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.dtags li { font-family: var(--f-mono); font-size: .625rem; letter-spacing: .1em; text-transform: uppercase;
+            color: var(--fg-2); border: 1px solid var(--rule); padding: 5px 10px; border-radius: 30px; }
+.dsrc { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.dsrc b { font-family: var(--f-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase;
+          color: var(--fg-3); font-weight: 400; display: block; margin-bottom: 6px; }
+.dsrc span { font-size: .82rem; color: var(--fg-2); line-height: 1.45; display: block; }
+
+/* Viewport that holds a scaled stage */
+.dp {
+  position: relative; width: 100%; aspect-ratio: 1280/800; overflow: hidden;
+  background: #111; border: 1px solid var(--rule); cursor: zoom-in;
+}
+.dp::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
+  transition: background .4s var(--e-out);
+}
+.dp:hover::after { background: rgba(0,0,0,.06); }
+.dp-open {
+  position: absolute; z-index: 5; right: 12px; bottom: 12px;
+  font-family: var(--f-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase;
+  background: #fff; color: #000; padding: 8px 14px; border-radius: 30px;
+  opacity: 0; translate: 0 6px; transition: opacity .35s var(--e-out), translate .35s var(--e-out);
+}
+.dp:hover .dp-open { opacity: 1; translate: 0; }
+
+.dp-stage {
+  position: absolute; top: 0; left: 0; width: 1280px; height: 800px;
+  transform-origin: 0 0; overflow: hidden;
+  transform: scale(var(--s, .5));
+}
+.dp-stage, .dp-stage * { box-sizing: border-box; }
+.dp-stage img { display: block; filter: none; }
+
+/* ---------- FULLSCREEN MODAL ---------- */
+.dmodal {
+  position: fixed; inset: 0; z-index: 9500; background: color-mix(in srgb, var(--bg) 97%, #000);
+  display: grid; grid-template-rows: auto 1fr auto; gap: 0;
+  opacity: 0; visibility: hidden; transition: opacity .4s var(--e-out), visibility .4s;
+}
+.dmodal.on { opacity: 1; visibility: visible; }
+.dmodal-hd, .dmodal-ft { display: flex; justify-content: space-between; align-items: center;
+                          gap: 16px; padding: 16px var(--gut); flex-wrap: wrap; }
+.dmodal-body { display: grid; place-items: center; padding: 0 var(--gut); min-height: 0; }
+.dmodal .dp { max-width: min(1400px, 100%); max-height: 100%; cursor: default; border-color: var(--rule-2); }
+.dmodal .dp-open { display: none; }
+.dmodal-x, .dmodal-nav button {
+  width: 42px; height: 42px; border: 1px solid var(--rule-2); border-radius: 50%;
+  display: grid; place-items: center; transition: background .25s, color .25s, border-color .25s;
+}
+.dmodal-x:hover, .dmodal-nav button:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.dmodal-nav { display: flex; gap: 8px; }
+
+/* ============================================================
+   D01 — FIELD ARCHIVE
+   ============================================================ */
+.d01 { background: #0B0B0C; color: #F1EEE8; font-family: "Archivo", sans-serif; padding: 40px 48px; position: relative; }
+.d01::before { content: ""; position: absolute; inset: 0;
+  background-image: linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: calc(100% / 12) 100%; }
+.d01 .top { display: flex; justify-content: space-between; align-items: flex-start;
+            padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,.14); position: relative; }
+.d01 .top b { font-size: 15px; font-weight: 700; letter-spacing: -.01em; display: block; }
+.d01 .m { font-family: "Space Mono", monospace; font-size: 10px; letter-spacing: .16em;
+          text-transform: uppercase; color: #9C978D; }
+.d01 nav { display: flex; gap: 22px; }
+.d01 .body { display: flex; justify-content: space-between; align-items: flex-end;
+             height: 596px; position: relative; padding-bottom: 8px; }
+.d01 h1 { font-size: 140px; font-weight: 700; line-height: .84; letter-spacing: -.055em;
+          text-transform: uppercase; margin: 0; }
+.d01 h1 sup { font-size: .15em; vertical-align: super; color: #D8402F; letter-spacing: 0; }
+.d01 .plate { width: 300px; border: 1px solid rgba(255,255,255,.14); background: #1A1A1D; }
+.d01 .plate .h { display: flex; justify-content: space-between; padding: 9px 12px;
+                 border-bottom: 1px solid rgba(255,255,255,.14); }
+.d01 .plate img { width: 100%; height: 190px; object-fit: cover; }
+.d01 .plate .r { display: flex; justify-content: space-between; padding: 7px 12px;
+                 border-top: 1px solid rgba(255,255,255,.1); font-size: 11px; }
+.d01 .btm { display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid rgba(255,255,255,.14); padding-top: 14px; position: relative; }
+.d01 .dot { color: #D8402F; }
+
+/* ============================================================
+   D02 — CLASSIFIED DOSSIER
+   ============================================================ */
+.d02 { background: #B29260; font-family: "Courier Prime", monospace;
+       color: #1E1912; padding: 46px 60px; position: relative; overflow: hidden; }
+.d02::before { content: ""; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  opacity: .18; mix-blend-mode: multiply; }
+.d02 .tab { position: absolute; right: 0; top: 96px; background: #8FA98A; color: #17200F;
+            padding: 12px 18px; font-size: 11px; letter-spacing: .22em; writing-mode: vertical-rl; }
+.d02 .sheet { position: relative; background: #F4F1E6; padding: 34px 40px; height: 100%;
+              box-shadow: 0 20px 50px rgba(0,0,0,.28); rotate: -.5deg; }
+.d02 .sheet::after { content: ""; position: absolute; left: 50%; top: -12px; translate: -50% 0;
+  width: 74px; height: 26px; border: 3px solid #6D6A60; border-bottom-color: transparent;
+  border-radius: 6px 6px 0 0; }
+.d02 h1 { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 60px; line-height: .92;
+          letter-spacing: -.035em; text-transform: uppercase; margin: 16px 0 18px; }
+.d02 .stampbig { display: inline-block; border: 3px solid #C0231C; color: #C0231C; padding: 6px 16px;
+                 font-weight: 700; letter-spacing: .3em; font-size: 15px; rotate: -4deg; }
+.d02 .rows { font-size: 13px; line-height: 1.9; }
+.d02 .rows i { font-style: normal; display: inline-block; width: 118px; color: #6D6A60; }
+.d02 .rows u { text-decoration: none; border-bottom: 1px solid #B9B4A4; padding-bottom: 1px; }
+.d02 .photo { position: absolute; right: 40px; top: 96px; width: 236px; rotate: 2.4deg;
+              background: #fff; padding: 9px 9px 32px; box-shadow: 0 12px 30px rgba(0,0,0,.3); }
+.d02 .photo img { width: 100%; height: 176px; object-fit: cover; filter: grayscale(1) contrast(1.2); }
+.d02 .photo em { position: absolute; left: 12px; bottom: 9px; font-size: 10px; font-style: normal; color: #58544A; }
+.d02 .tape { position: absolute; width: 92px; height: 26px; background: rgba(226,213,178,.85);
+             box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.d02 .tape.a { top: -12px; left: -20px; rotate: -28deg; }
+.d02 .tape.b { bottom: 12px; right: -20px; rotate: -22deg; }
+.d02 .foot { position: absolute; left: 40px; right: 40px; bottom: 26px; display: flex;
+             justify-content: space-between; font-size: 11px; color: #6D6A60;
+             border-top: 1px solid #C9C3B0; padding-top: 10px; }
+
+/* ============================================================
+   D03 — EDITORIAL RISO
+   ============================================================ */
+.d03 { background: #DE1F14; padding: 54px; display: grid; place-items: center; }
+.d03 .panel { background: #EFEBDC; width: 100%; height: 100%; padding: 44px 54px;
+              display: flex; flex-direction: column; position: relative; }
+.d03 .sal { font-family: "Instrument Serif", serif; font-style: italic; font-size: 25px; color: #16150F; margin-bottom: 10px; }
+.d03 h1 { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 55px; line-height: 1.03;
+          letter-spacing: -.038em; color: #16150F; margin: 0; flex: 1; }
+.d03 h1 em { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; color: #DE1F14; }
+.d03 .sig { display: flex; align-items: flex-end; gap: 16px; margin-top: 20px; }
+.d03 .sig u { flex: 1; height: 1px; background: #16150F; text-decoration: none; }
+.d03 .sig span { font-family: "Instrument Serif", serif; font-style: italic; font-size: 22px; color: #16150F; }
+.d03 .tag { position: absolute; top: 44px; right: 54px; font-family: "Space Mono", monospace;
+            font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: #8A8577; }
+
+/* ============================================================
+   D04 — ACID INDEX
+   ============================================================ */
+.d04 { background: #DDFF4E; color: #08080A; font-family: "Anton", sans-serif; display: flex; flex-direction: column; }
+.d04 .bar { background: #08080A; color: #DDFF4E; display: flex; justify-content: space-between;
+            align-items: center; padding: 11px 26px; font-family: "Archivo", sans-serif;
+            font-weight: 700; font-size: 13px; letter-spacing: .02em; }
+.d04 .bar nav { display: flex; gap: 22px; }
+.d04 .type { padding: 20px 26px 8px; flex: 1; }
+.d04 h1 { font-size: 74px; line-height: .87; letter-spacing: -.012em; text-transform: uppercase; margin: 0; }
+.d04 h1 small { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 15px;
+                letter-spacing: -.01em; text-transform: none; line-height: 1.14; display: inline-block;
+                vertical-align: 14px; max-width: 250px; margin: 0 8px; }
+.d04 .strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 3px; padding: 0 26px 26px; }
+.d04 .strip img { width: 100%; height: 132px; object-fit: cover; filter: grayscale(1) contrast(1.28); }
+.d04 .foot { background: #08080A; color: #DDFF4E; padding: 9px 26px; display: flex;
+             justify-content: space-between; font-family: "Archivo", sans-serif; font-size: 11px; }
+
+/* ============================================================
+   D05 — BLUEPRINT
+   ============================================================ */
+.d05 { background: #E9E5D6; color: #17325E; font-family: "Space Mono", monospace; padding: 34px; position: relative; }
+.d05::before { content: ""; position: absolute; inset: 34px;
+  background-image: linear-gradient(rgba(23,50,94,.16) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(23,50,94,.16) 1px, transparent 1px);
+  background-size: 22px 22px; }
+.d05 .frame { position: relative; height: 100%; border: 2px solid #17325E; padding: 26px; }
+.d05 .hdr { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .14em;
+            text-transform: uppercase; border-bottom: 1px solid #17325E; padding-bottom: 10px; }
+.d05 h1 { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 78px; line-height: .88;
+          letter-spacing: -.045em; text-transform: uppercase; margin: 44px 0 0; }
+.d05 .plate { position: absolute; right: 26px; top: 82px; width: 300px; border: 2px solid #17325E; background: #fff; }
+.d05 .plate img { width: 100%; height: 208px; object-fit: cover; filter: grayscale(1) contrast(1.1) opacity(.9); }
+.d05 .plate .cap { font-size: 10px; padding: 7px 10px; border-top: 2px solid #17325E; letter-spacing: .1em; }
+.d05 .dim { position: absolute; left: 26px; right: 342px; top: 246px; height: 1px; background: #17325E; }
+.d05 .dim::before, .d05 .dim::after { content: ""; position: absolute; top: -4px; width: 1px; height: 9px; background: #17325E; }
+.d05 .dim::before { left: 0; } .d05 .dim::after { right: 0; }
+.d05 .dim span { position: absolute; left: 50%; top: -19px; translate: -50% 0; background: #E9E5D6;
+                 padding: 0 8px; font-size: 10px; letter-spacing: .1em; }
+.d05 .block { position: absolute; left: 26px; bottom: 26px; border: 2px solid #17325E; background: #fff; display: flex; }
+.d05 .block div { padding: 9px 15px; border-right: 1px solid #17325E; font-size: 10px; letter-spacing: .1em; }
+.d05 .block div:last-child { border-right: 0; }
+.d05 .block b { display: block; font-size: 13px; font-family: "Archivo", sans-serif; letter-spacing: -.01em; margin-top: 3px; }
+.d05 .notes { position: absolute; right: 26px; bottom: 26px; text-align: right; font-size: 10px;
+              letter-spacing: .1em; line-height: 2; text-transform: uppercase; }
+
+/* ============================================================
+   D06 — DESK COLLAGE
+   ============================================================ */
+.d06 { background: #F3F0E8; position: relative; overflow: hidden; font-family: "Courier Prime", monospace; color: #1B1A17; }
+.d06 .hand { font-family: "Caveat", cursive; color: #1D3FBF; }
+.d06 .top { position: absolute; top: 32px; left: 40px; right: 40px; display: flex;
+            justify-content: space-between; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.d06 .pic { position: absolute; background: #fff; padding: 10px 10px 34px; box-shadow: 0 14px 34px rgba(0,0,0,.18); }
+.d06 .pic img { display: block; object-fit: cover; filter: grayscale(1) contrast(1.06); }
+.d06 .pic em { position: absolute; left: 12px; bottom: 10px; font-style: normal; font-size: 10px; color: #7A756A; }
+.d06 .p1 { left: 118px; top: 168px; rotate: -7deg; } .d06 .p1 img { width: 190px; height: 235px; }
+.d06 .p2 { left: 322px; top: 128px; rotate: 3.5deg; } .d06 .p2 img { width: 232px; height: 168px; }
+.d06 .p3 { left: 336px; top: 340px; rotate: -2.5deg; } .d06 .p3 img { width: 205px; height: 205px; }
+.d06 .p4 { left: 600px; top: 210px; rotate: 6deg; } .d06 .p4 img { width: 176px; height: 226px; }
+.d06 .p5 { left: 574px; top: 452px; rotate: -4deg; } .d06 .p5 img { width: 210px; height: 148px; }
+.d06 .clip { position: absolute; width: 18px; height: 46px; border: 3px solid #C6362B;
+             border-radius: 9px; top: -18px; left: 26px; rotate: 12deg; }
+.d06 .clip.y { border-color: #E0A32B; }
+.d06 .tape { position: absolute; width: 84px; height: 24px; background: rgba(214,205,182,.78); rotate: -24deg; }
+.d06 .note1 { position: absolute; left: 830px; top: 150px; width: 300px; font-size: 30px; line-height: 1.22; }
+.d06 .note2 { position: absolute; left: 848px; top: 306px; width: 290px; font-size: 12px; line-height: 1.75; color: #4A463D; }
+.d06 .scrib { position: absolute; left: 846px; top: 420px; width: 210px; height: 84px; }
+.d06 .btm { position: absolute; left: 40px; right: 40px; bottom: 30px; display: flex;
+            justify-content: space-between; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+            border-top: 1px solid #C9C4B6; padding-top: 12px; }
+
+
+/* ============================================================
+   D07 — STUDIO INDEX
+   ============================================================ */
+.d07 { background: #EDEDED; padding: 46px; font-family: "Archivo", sans-serif; color: #0A0A0A; }
+.d07 .card { background: #fff; height: 100%; display: grid; grid-template-rows: 1fr auto; }
+.d07 .split { display: grid; grid-template-columns: 400px 1fr; min-height: 0; }
+.d07 .mosaic { display: grid; grid-template-columns: repeat(2,1fr); grid-auto-rows: 1fr; }
+.d07 .mosaic img { width: 100%; height: 100%; object-fit: cover; }
+.d07 .list { padding: 22px 30px; display: flex; flex-direction: column; justify-content: center; }
+.d07 .list li { display: flex; align-items: baseline; gap: 8px; padding: 7px 0; border-bottom: 1px solid #E4E4E4; }
+.d07 .list b { font-weight: 500; font-size: 30px; letter-spacing: -.035em; line-height: 1; }
+.d07 .list sup { font-size: 10px; color: #8E8E8E; letter-spacing: .01em; }
+.d07 .list u { flex: 1; text-decoration: none; }
+.d07 .list span { font-size: 30px; letter-spacing: -.03em; color: #0A0A0A; }
+.d07 .foot { display: flex; justify-content: space-between; align-items: center;
+             padding: 12px 22px; border-top: 1px solid #DCDCDC; font-size: 11px; }
+.d07 .seg { display: flex; border: 1px solid #C9C9C9; border-radius: 30px; overflow: hidden; }
+.d07 .seg i { font-style: normal; font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+              padding: 5px 13px; border-right: 1px solid #C9C9C9; }
+.d07 .seg i:last-child { border-right: 0; }
+.d07 .seg i.on { background: #0A0A0A; color: #fff; }
+.d07 .reg { width: 20px; height: 20px; border: 1px solid #0A0A0A; border-radius: 50%;
+            display: grid; place-items: center; font-size: 10px; }
+
+/* ============================================================
+   D08 — SIGNAL ORANGE
+   ============================================================ */
+.d08 { background: #09090A; color: #FF4A17; font-family: "Anton", sans-serif; padding: 30px; }
+.d08 .frame { border: 1px solid #FF4A17; height: 100%; display: grid; grid-template-rows: auto 1fr auto; }
+.d08 .top { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px;
+            border-bottom: 1px solid #FF4A17; font-family: "Space Mono", monospace; font-size: 10px;
+            letter-spacing: .18em; text-transform: uppercase; }
+.d08 .mid { display: grid; grid-template-columns: 1.25fr 1fr; min-height: 0; }
+.d08 .lft { padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between;
+            border-right: 1px solid #FF4A17; }
+.d08 h1 { font-size: 92px; line-height: .84; letter-spacing: -.01em; text-transform: uppercase;
+          margin: 0; color: #FF4A17; }
+.d08 .fill { background: #FF4A17; color: #09090A; padding: 12px 16px; font-size: 30px;
+             text-transform: uppercase; letter-spacing: -.005em; }
+.d08 .rgt { position: relative; overflow: hidden; }
+.d08 .rgt img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.3); opacity: .58; }
+.d08 .rgt::after { content: ""; position: absolute; inset: 0; background: #FF4A17; mix-blend-mode: multiply; opacity: .55; }
+.d08 .rgt .lbl { position: absolute; left: 18px; bottom: 16px; z-index: 2; font-family: "Space Mono", monospace;
+                 font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: #09090A; }
+.d08 .grid { display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid #FF4A17; }
+.d08 .grid div { padding: 11px 16px; border-right: 1px solid #FF4A17; font-family: "Space Mono", monospace;
+                 font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+.d08 .grid div:last-child { border-right: 0; }
+.d08 .grid b { display: block; font-family: "Anton", sans-serif; font-size: 26px; letter-spacing: 0;
+               margin-top: 5px; color: #FF4A17; }
+
+/* ============================================================
+   D09 — HALFTONE ID
+   ============================================================ */
+.d09 { background: #D9D7D1; color: #17171A; font-family: "Archivo", sans-serif; padding: 42px 48px; position: relative; overflow: hidden; }
+.d09 .ghost { position: absolute; left: 48px; right: 48px; top: 168px; font-size: 178px; font-weight: 700;
+              letter-spacing: -.055em; text-transform: uppercase; line-height: .82; color: transparent;
+              -webkit-text-stroke: 1px rgba(23,23,26,.2); pointer-events: none; }
+.d09 .top { display: flex; justify-content: space-between; align-items: flex-start; position: relative;
+            border-bottom: 1px solid rgba(23,23,26,.28); padding-bottom: 14px; }
+.d09 .m { font-family: "Space Mono", monospace; font-size: 10px; letter-spacing: .18em;
+          text-transform: uppercase; color: #67655F; }
+.d09 .ids { display: grid; grid-template-columns: repeat(4,1fr); gap: 22px; margin-top: 118px; position: relative; }
+.d09 .id { background: #EFEDE7; padding: 11px; box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+.d09 .id .ph { position: relative; overflow: hidden; }
+.d09 .id img { width: 100%; height: 218px; object-fit: cover; filter: grayscale(1) contrast(1.16) brightness(1.04); }
+.d09 .id .ph::after { content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,.85) .9px, transparent 1px);
+  background-size: 3.2px 3.2px; mix-blend-mode: multiply; opacity: .5; }
+.d09 .id .cap { display: flex; justify-content: space-between; margin-top: 9px;
+                font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: .1em;
+                text-transform: uppercase; color: #67655F; }
+.d09 .id .sig { margin-top: 7px; height: 1px; background: rgba(23,23,26,.3); }
+.d09 .btm { position: absolute; left: 48px; right: 48px; bottom: 30px; display: flex;
+            justify-content: space-between; align-items: flex-end;
+            border-top: 1px solid rgba(23,23,26,.28); padding-top: 14px; }
+.d09 .btm h1 { font-size: 40px; font-weight: 700; letter-spacing: -.04em; text-transform: uppercase; margin: 0; }
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .dp-open { opacity: 1; translate: 0; }
+}
+
+/* ============================================================
+   D10 — PHOTOCOPY
+   ============================================================ */
+.d10 { background: #C7C5C1; color: #17171A; font-family: "Courier Prime", monospace;
+       padding: 40px 54px; position: relative; overflow: hidden; }
+.d11::before { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 1px, transparent 1px 7px); }
+.d10 .sheet { background: #DEDCD8; height: 100%; position: relative; padding: 26px 30px; }
+.d10 .scan { position: absolute; top: 78px; height: 400px; filter: grayscale(1) contrast(1.9) brightness(1.12); }
+.d10 .scan img { height: 100%; width: auto; object-fit: cover; }
+.d10 .scan.mid { left: 50%; translate: -50% 0; z-index: 2; box-shadow: 0 0 0 1px rgba(0,0,0,.12); }
+.d10 .scan.gh { opacity: .3; width: 190px; overflow: hidden; }
+.d10 .scan.gh.l { left: 26px; } .d10 .scan.gh.r { right: 26px; }
+.d10 .strip { position: absolute; left: 50%; translate: -50% 0; top: 500px; z-index: 4;
+  background: #F6F5F2; padding: 9px 34px; rotate: -.6deg; box-shadow: 0 2px 6px rgba(0,0,0,.14); }
+.d10 .strip b { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 25px; letter-spacing: -.01em; }
+.d10 .sub { position: absolute; left: 0; right: 0; top: 556px; text-align: center; z-index: 4; font-size: 14px; }
+.d10 .sub u { text-decoration: none; border-bottom: 1px solid #17171A; }
+.d10 .hand { font-family: "Caveat", cursive; color: #191919; font-size: 19px; line-height: 1.15; position: absolute; z-index: 5; }
+.d10 .top { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #56544F; }
+.d10 .sig { position: absolute; right: 74px; bottom: 34px; z-index: 5; }
+
+/* ============================================================
+   D11 — ANNOTATED
+   ============================================================ */
+.d11 { background: #EFEEEA; color: #131316; font-family: "Archivo", sans-serif; padding: 40px 54px; position: relative; }
+.d11 .hand { font-family: "Caveat", cursive; color: #1D3FBF; position: absolute; z-index: 6; line-height: 1.1; }
+.d11 .top { display: flex; justify-content: space-between; font-family: "Space Mono", monospace;
+            font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #6C6A64;
+            border-bottom: 1px solid rgba(19,19,22,.24); padding-bottom: 12px; }
+.d11 h1 { font-size: 96px; font-weight: 700; line-height: .88; letter-spacing: -.05em;
+          text-transform: uppercase; margin: 46px 0 0; position: relative; z-index: 2; }
+.d11 .circ { position: absolute; border: 2.4px solid #1D3FBF; border-radius: 50%; z-index: 5; pointer-events: none; }
+.d11 .under { position: absolute; height: 2.4px; background: #1D3FBF; z-index: 5; }
+.d11 svg.ann { position: absolute; z-index: 5; overflow: visible; }
+.d11 .row { display: grid; grid-template-columns: 300px 1fr; gap: 40px; margin-top: 42px; position: relative; }
+.d11 .row img { width: 100%; height: 250px; object-fit: cover; filter: grayscale(1) contrast(1.12); }
+.d11 .row p { font-size: 15px; line-height: 1.66; color: #40403C; max-width: 46ch; }
+.d11 .btm { position: absolute; left: 54px; right: 54px; bottom: 34px; display: flex;
+            justify-content: space-between; align-items: flex-end;
+            border-top: 1px solid rgba(19,19,22,.24); padding-top: 13px;
+            font-family: "Space Mono", monospace; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #6C6A64; }
+
+/* ============================================================
+   D12 — REPARATIONS BAND
+   ============================================================ */
+.d12 { background: #8E8E8E; display: grid; place-items: center; padding: 34px; }
+.d12 .board { width: 100%; height: 100%; display: grid; grid-template-rows: auto 1fr; box-shadow: 0 18px 50px rgba(0,0,0,.3); }
+.d12 .neon { background: #DFFF3B; color: #0A0A0A; padding: 22px 26px 16px; font-family: "Archivo", sans-serif; position: relative; }
+.d12 .neon .ig { position: absolute; top: 20px; right: 26px; font-size: 12px; font-weight: 500; }
+.d12 .neon h1 { font-weight: 800; font-size: 44px; line-height: .96; letter-spacing: -.028em; text-transform: uppercase; }
+.d12 .neon h1 small { font-weight: 500; font-size: 13px; line-height: 1.18; letter-spacing: 0;
+                      text-transform: none; display: inline-block; vertical-align: .42em; max-width: 210px; margin: 0 .3em; }
+.d12 .neon .tail { font-size: 12.5px; font-weight: 500; line-height: 1.35; margin-top: 12px;
+                   border-top: 1px solid rgba(10,10,10,.35); padding-top: 9px; }
+.d12 .band { background: #0A0A0A; position: relative; overflow: hidden; }
+.d12 .band .giant { position: absolute; left: 0; right: 0; bottom: -54px; top: auto;
+  font-family: "Archivo", sans-serif; font-weight: 800; font-size: 250px; line-height: .8;
+  letter-spacing: -.045em; color: #F4F4F0; text-transform: uppercase; white-space: nowrap; text-align: center; }
+.d12 .band img { position: absolute; left: 50%; translate: -50% 0; bottom: 0; width: 330px; height: 132px;
+                 object-fit: cover; filter: grayscale(1) contrast(1.2); z-index: 2; }
+
+/* ============================================================
+   D13 — STICKER BOOK
+   ============================================================ */
+.d13 { background: #F0E9DC; position: relative; overflow: hidden; font-family: "Outfit", "Archivo", sans-serif; color: #16161A; }
+.d14::before { content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,.11) 1.1px, transparent 1.2px); background-size: 19px 19px; }
+.d13 .top { position: absolute; top: 30px; left: 46px; right: 46px; display: flex;
+            justify-content: space-between; font-family: "Space Mono", monospace; font-size: 10px;
+            letter-spacing: .16em; text-transform: uppercase; color: #6B6459; z-index: 20; }
+/* die-cut sticker: white pad + perforated teeth top & bottom */
+.d13 .stk { position: absolute; background: #fff; padding: 11px 11px 30px;
+            filter: drop-shadow(0 9px 16px rgba(0,0,0,.22)); }
+.d13 .stk::before, .d13 .stk::after { content: ""; position: absolute; left: 0; right: 0; height: 9px;
+  background: radial-gradient(circle 5.5px at 8px 50%, #fff 97%, transparent 100%) repeat-x;
+  background-size: 16px 9px; }
+.d13 .stk::before { top: -8px; } .d13 .stk::after { bottom: -8px; }
+.d13 .stk img { width: 100%; height: 100%; object-fit: cover; }
+.d13 .stk em { position: absolute; left: 13px; bottom: 9px; font-style: normal; font-weight: 600;
+               font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.d13 .s1 { left: 92px;  top: 176px; width: 208px; rotate: -8deg; }  .d13 .s1 img { height: 244px; }
+.d13 .s2 { left: 332px; top: 128px; width: 246px; rotate: 4deg; }   .d13 .s2 img { height: 176px; }
+.d13 .s3 { left: 348px; top: 372px; width: 214px; rotate: -3deg; }  .d13 .s3 img { height: 214px; }
+.d13 .s4 { left: 614px; top: 216px; width: 190px; rotate: 7deg; }   .d13 .s4 img { height: 238px; }
+.d13 .s5 { left: 598px; top: 486px; width: 222px; rotate: -5deg; }  .d13 .s5 img { height: 152px; }
+.d13 .word { position: absolute; left: 856px; top: 196px; z-index: 15; }
+.d13 .word b { display: block; font-weight: 700; font-size: 74px; line-height: .9; letter-spacing: -.035em; }
+.d13 .word i { font-style: normal; font-weight: 600; font-size: 22px; color: #C6362B; }
+.d13 .word p { margin-top: 16px; font-size: 13px; line-height: 1.62; max-width: 25ch; color: #4A4640; }
+.d13 .badge { position: absolute; left: 872px; top: 470px; width: 116px; height: 116px; border-radius: 50%;
+  background: #C6362B; color: #fff; display: grid; place-items: center; text-align: center;
+  font-weight: 700; font-size: 13px; line-height: 1.18; rotate: -12deg; text-transform: uppercase; }
+.d13 .btm { position: absolute; left: 46px; right: 46px; bottom: 28px; display: flex;
+            justify-content: space-between; font-family: "Space Mono", monospace; font-size: 10px;
+            letter-spacing: .16em; text-transform: uppercase; color: #6B6459; z-index: 20; }
+
+/* ============================================================
+   D14 — POSTCARD
+   ============================================================ */
+.d14 { position: relative; overflow: hidden; font-family: "Outfit", "Archivo", sans-serif; color: #17171A;
+       display: grid; place-items: center; }
+.d14 .bg { position: absolute; inset: 0; }
+.d14 .bg img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.72) contrast(.96); }
+.d14 .bg::after { content: ""; position: absolute; inset: 0; background: rgba(20,30,40,.14); }
+.d14 .card { position: relative; width: 820px; height: 560px; background: #FCFBF7; rotate: -1.2deg;
+             filter: drop-shadow(0 22px 44px rgba(0,0,0,.34)); }
+.d14 .card::before, .d14 .card::after { content: ""; position: absolute; left: 0; right: 0; height: 13px;
+  background: radial-gradient(circle 8px at 11px 50%, #FCFBF7 97%, transparent 100%) repeat-x;
+  background-size: 22px 13px; }
+.d14 .card::before { top: -12px; } .d14 .card::after { bottom: -12px; }
+.d14 .lined { position: absolute; left: 42px; top: 46px; width: 268px; height: 214px; background: #EDEAD9;
+  rotate: -2deg; padding: 20px 22px; box-shadow: 0 5px 14px rgba(0,0,0,.14);
+  background-image: repeating-linear-gradient(#EDEAD9 0 25px, rgba(23,23,26,.16) 25px 26px); }
+.d14 .lined b { font-weight: 600; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: 26px; }
+.d14 .lined span { display: block; font-weight: 500; font-size: 12.5px; letter-spacing: .08em;
+                   text-transform: uppercase; line-height: 25px; }
+.d14 .polaroid { position: absolute; right: 46px; top: 40px; width: 214px; background: #fff;
+  padding: 10px 10px 30px; rotate: 4deg; box-shadow: 0 12px 26px rgba(0,0,0,.24); }
+.d14 .polaroid img { width: 100%; height: 168px; object-fit: cover; }
+.d14 .clip { position: absolute; top: -20px; right: 26px; width: 15px; height: 50px;
+             border: 3px solid #9AA0A6; border-radius: 8px; rotate: 8deg; }
+.d14 .postage { position: absolute; left: 322px; top: 92px; width: 82px; height: 100px; background: #2E5E42;
+  rotate: -6deg; display: grid; place-items: center; box-shadow: 0 5px 12px rgba(0,0,0,.2); }
+.d14 .postage::before, .d14 .postage::after { content: ""; position: absolute; left: 0; right: 0; height: 7px;
+  background: radial-gradient(circle 4px at 6px 50%, #FCFBF7 97%, transparent 100%) repeat-x; background-size: 12px 7px; }
+.d14 .postage::before { top: -6px; } .d14 .postage::after { bottom: -6px; }
+.d14 .postage span { color: #C9DCC9; font-weight: 700; font-size: 11px; text-align: center; line-height: 1.2; }
+.d14 .word { position: absolute; left: 54px; bottom: 46px; }
+.d14 .word b { font-weight: 700; font-size: 92px; line-height: .84; letter-spacing: -.05em; display: block; }
+.d14 .word i { font-style: italic; font-weight: 600; font-size: 30px; margin-left: 10px; }
+.d14 .stampmark { position: absolute; right: 54px; bottom: 54px; font-family: "Space Mono", monospace;
+                  font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #6B6459; text-align: right; line-height: 1.8; }
+
+/* direct links to each direction's own about + case study */
+.dlinks { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; }
+.dlinks a { font-family: var(--f-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase;
+            color: var(--fg-2); padding-bottom: 2px; border-bottom: 1px solid var(--rule-2);
+            transition: color .3s var(--e-out), border-color .3s var(--e-out); }
+.dlinks a:hover { color: var(--accent); border-color: var(--accent); }

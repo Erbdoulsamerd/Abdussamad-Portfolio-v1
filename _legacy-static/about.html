@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="archive">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — Abdussamad Ibrahim</title>
+<meta name="description" content="Abdussamad Ibrahim, also known as Flint — a multidisciplinary designer in Nigeria whose practice exists at the intersection of identity, culture, objects, spaces and experiences.">
+<meta name="theme-color" content="#0B0B0C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230B0B0C'/><text y='74' x='50' font-size='68' font-family='Helvetica' font-weight='bold' fill='%23D8402F' text-anchor='middle'>A</text></svg>">
+
+<style>
+  /* ---- About-only ---- */
+  .prog { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--accent);
+          transform-origin: 0 50%; transform: scaleX(0); z-index: 950; }
+
+  .ab-hero { padding-top: 158px; padding-bottom: clamp(40px,7vw,90px); }
+  .ab-doc { display: grid; grid-template-columns: 230px 1fr; gap: clamp(30px,5vw,80px); align-items: start; }
+  @media (max-width: 980px) { .ab-doc { grid-template-columns: 1fr; } }
+
+  .ab-nav { position: sticky; top: 104px; }
+  @media (max-width: 980px) { .ab-nav { position: static; margin-bottom: 34px; } }
+  .ab-nav ol { border-top: 1px solid var(--rule); }
+  .ab-nav a { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule);
+              font-family: var(--f-mono); font-size: .688rem; letter-spacing: .1em; text-transform: uppercase;
+              color: var(--fg-3); transition: color .3s var(--e-out), padding-left .3s var(--e-out); }
+  .ab-nav a:hover { color: var(--fg); padding-left: 7px; }
+  .ab-nav a[aria-current="true"] { color: var(--accent); padding-left: 7px; }
+  .ab-nav a[aria-current="true"] span:first-child { color: var(--accent); }
+
+  .ab-sec { padding-block: clamp(44px,7vw,96px); border-top: 1px solid var(--rule); }
+  .ab-sec:first-child { border-top: 0; padding-top: 0; }
+  .ab-sec h2 { margin-bottom: clamp(22px,3vw,40px); }
+  .ab-sec p + p { margin-top: 1.15em; }
+
+  /* Pull statement */
+  .pull { border-left: 2px solid var(--accent); padding: 4px 0 4px clamp(18px,3vw,34px);
+          margin-block: clamp(28px,4vw,52px); }
+  .pull p { font-family: var(--f-serif); font-style: italic; font-size: clamp(1.35rem,3vw,2.3rem);
+            line-height: 1.24; letter-spacing: -.015em; color: var(--fg); max-width: 22ch; }
+
+  /* Philosophy list */
+  .phil { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .phil li { background: var(--bg); padding: clamp(18px,2.6vw,30px); display: flex; gap: 18px; align-items: baseline;
+             transition: background .4s var(--e-out); }
+  .phil li:hover { background: var(--bg-plate); }
+  .phil li b { font-family: var(--f-mono); font-size: .688rem; letter-spacing: .1em; color: var(--accent); font-weight: 400; }
+  .phil li span { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.15rem,2.4vw,1.85rem);
+                  line-height: 1.1; letter-spacing: -.025em; }
+
+  /* Practice grid — interactive */
+  .prac { display: grid; grid-template-columns: repeat(auto-fill,minmax(min(230px,100%),1fr)); gap: 1px;
+          background: var(--rule); border: 1px solid var(--rule); }
+  .prac li { background: var(--bg); position: relative; overflow: hidden; }
+  .prac button { width: 100%; text-align: left; padding: clamp(18px,2.4vw,26px); display: block; position: relative; z-index: 1; }
+  .prac .n { font-family: var(--f-mono); font-size: .625rem; letter-spacing: .12em; color: var(--fg-3); display: block; margin-bottom: 26px; transition: color .35s; }
+  .prac .t { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.02rem,1.5vw,1.24rem);
+             line-height: 1.1; letter-spacing: -.02em; display: block; transition: color .35s; }
+  .prac li::before { content: ""; position: absolute; inset: 0; background: var(--accent);
+                     translate: 0 100%; transition: translate .5s var(--e-out); }
+  .prac li:hover::before, .prac li:focus-within::before { translate: 0 0; }
+  .prac li:hover .t, .prac li:hover .n, .prac li:focus-within .t, .prac li:focus-within .n { color: #fff; }
+
+  /* Timeline */
+  .tl { border-top: 1px solid var(--rule); }
+  .tl li { display: grid; grid-template-columns: 96px 1fr; gap: clamp(16px,3vw,38px);
+           padding: clamp(18px,2.6vw,28px) 0; border-bottom: 1px solid var(--rule); }
+  @media (max-width: 640px) { .tl li { grid-template-columns: 1fr; gap: 8px; } }
+
+  .ab-plate-img { aspect-ratio: 4/5; overflow: hidden; background: var(--bg-inset); }
+  .ab-plate-img img { width: 100%; height: 100%; object-fit: cover; }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="prog" data-progress aria-hidden="true"></div>
+
+<header class="hdr">
+  <div class="brand">
+    <b>Abdussamad Ibrahim</b>
+    <span class="mono">Creative Systems Designer</span>
+  </div>
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html">Index</a>
+    <a href="about.html" aria-current="page">About</a>
+    <a href="gidan-kasa.html">Case Study</a>
+    <a href="directions.html">Directions</a>
+  </nav>
+  <div class="hdr-r">
+    <span class="clock" data-clock></span>
+    <button class="tgl" data-theme-toggle aria-label="Toggle theme"><span data-theme-icon>☀</span></button>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<nav class="drawer" aria-label="Mobile">
+  <a href="index.html">Index <em>01</em></a>
+  <a href="about.html">About <em>02</em></a>
+  <a href="gidan-kasa.html">Case Study <em>03</em></a>
+  <a href="directions.html">Directions <em>04</em></a>
+</nav>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="ab-hero wrap" data-hero>
+  <div class="mono" data-rv style="margin-bottom:clamp(18px,3vw,34px);display:flex;gap:20px;flex-wrap:wrap">
+    <span>File AI—001</span><span>Subject dossier</span><span class="accent">Open</span>
+  </div>
+
+  <h1 class="mega" style="margin:0;text-transform:uppercase">
+    <span class="linemask"><i>About</i></span>
+    <span class="linemask"><i>the practice</i></span>
+  </h1>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:var(--gut);
+              margin-top:clamp(34px,5vw,64px);padding-top:24px;border-top:1px solid var(--rule);align-items:start">
+    <p class="lead" data-rv data-d="1">
+      I am Abdussamad Ibrahim, also known as <span class="accent">Flint</span> — a multidisciplinary
+      designer based in Nigeria whose practice exists at the intersection of identity, culture,
+      objects, spaces, and experiences.
+    </p>
+    <div class="plate" data-rv data-d="2" style="justify-self:end;width:min(360px,100%)">
+      <i class="regmark tl"></i><i class="regmark tr"></i><i class="regmark bl"></i><i class="regmark br"></i>
+      <div class="plate-hd"><span class="mono">Record card</span><span class="stamp">Verified</span></div>
+      <div class="plate-bd">
+        <div class="idrow"><span class="mono">Full name</span><b>Abdussamad Ibrahim</b></div>
+        <div class="idrow"><span class="mono">Known as</span><b>Flint</b></div>
+        <div class="idrow"><span class="mono">Discipline</span><b>Creative Systems</b></div>
+        <div class="idrow"><span class="mono">Origin</span><b>Northern Nigeria</b></div>
+        <div class="idrow"><span class="mono">Entry point</span><b>Brand Identity</b></div>
+        <div class="idrow"><span class="mono">Status</span><b class="accent">Expanding</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DOCUMENT ============ -->
+<div class="wrap" style="padding-bottom:var(--pad-y)">
+<div class="ab-doc">
+
+  <!-- Side nav -->
+  <nav class="ab-nav" aria-label="Sections" data-spy-nav>
+    <p class="mono" style="margin-bottom:12px">Contents</p>
+    <ol>
+      <li><a href="#who"><span>01</span><span>Who I Am</span></a></li>
+      <li><a href="#philosophy"><span>02</span><span>Philosophy</span></a></li>
+      <li><a href="#practice"><span>03</span><span>My Practice</span></a></li>
+      <li><a href="#drives"><span>04</span><span>What Drives Me</span></a></li>
+      <li><a href="#areas"><span>05</span><span>Areas of Practice</span></a></li>
+      <li><a href="#forward"><span>06</span><span>Looking Forward</span></a></li>
+    </ol>
+    <p class="mono" style="margin-top:20px;color:var(--fg-3)">Reading time ≈ 4 min</p>
+  </nav>
+
+  <!-- Body -->
+  <div>
+
+    <!-- 01 -->
+    <section class="ab-sec" id="who">
+      <div class="eyebrow"><b>01</b><span>Who I Am</span></div>
+      <h2 class="lg">
+        <span class="linemask"><i>I began in brand</i></span>
+        <span class="linemask"><i>identity. I did not</i></span>
+        <span class="linemask"><i>stay there.</i></span>
+      </h2>
+      <p class="body-2" data-rv>
+        Although I began my journey through brand identity design, my work has continually
+        expanded beyond traditional boundaries. Today, I work across branding, creative direction,
+        industrial design, photography, editorial design, spatial thinking, hospitality concepts,
+        and community building.
+      </p>
+      <p class="body-2" data-rv data-d="1">
+        I don't see these as separate disciplines, but as different ways of expressing the same idea.
+      </p>
+
+      <div class="pull" data-rv data-d="2">
+        <p>Design is not defined by the medium. The medium simply becomes the most appropriate tool for solving a problem.</p>
+      </div>
+    </section>
+
+    <!-- 02 -->
+    <section class="ab-sec" id="philosophy">
+      <div class="eyebrow"><b>02</b><span>My Philosophy</span></div>
+      <h2 class="lg">
+        <span class="linemask"><i>The strongest ideas</i></span>
+        <span class="linemask"><i>are not confined</i></span>
+        <span class="linemask"><i>to one discipline.</i></span>
+      </h2>
+
+      <ul class="phil" data-rv>
+        <li><b>A</b><span>A visual identity can shape perception.</span></li>
+        <li><b>B</b><span>A product can encourage interaction.</span></li>
+        <li><b>C</b><span>A space can influence behavior.</span></li>
+        <li><b>D</b><span>A photograph can preserve culture.</span></li>
+        <li><b>E</b><span>A community can change lives.</span></li>
+      </ul>
+
+      <p class="body-2" data-rv data-d="1" style="margin-top:28px">
+        Rather than creating isolated deliverables, I design systems that connect people, places,
+        ideas, and experiences. Every project starts with curiosity and ends with one question:
+      </p>
+      <p class="lg accent serif-it" data-rv data-d="2" style="margin-top:22px;font-weight:400">
+        How can this become more meaningful?
+      </p>
+    </section>
+
+    <!-- 03 -->
+    <section class="ab-sec" id="practice">
+      <div class="eyebrow"><b>03</b><span>My Practice</span></div>
+      <h2 class="lg">
+        <span class="linemask"><i>Fluid between</i></span>
+        <span class="linemask"><i>digital and physical.</i></span>
+      </h2>
+      <p class="body-2" data-rv>
+        I have designed brand identities for businesses, startups, and cultural organizations.
+        I have built physical structures like a skateboard ramp to support a growing skateboarding
+        community. I have developed hospitality concepts where branding, architecture, interiors,
+        and storytelling become one experience. Through photography, I document people, places,
+        and ideas with the same intentionality that I bring to design.
+      </p>
+
+      <ul class="tl" data-rv data-d="1" style="margin-top:34px">
+        <li>
+          <span class="mono accent">Gidan Kasa</span>
+          <span>
+            <span class="md">A hospitality concept where earth, architecture and identity are one system.</span>
+            <span class="mono" style="display:block;margin-top:8px">
+              <a class="ulink" href="gidan-kasa.html">Read the case study →</a>
+            </span>
+          </span>
+        </li>
+        <li>
+          <span class="mono">Aadil</span>
+          <span><span class="md">A food brand built on warmth, appetite and everyday joy.</span></span>
+        </li>
+        <li>
+          <span class="mono">Enlira</span>
+          <span><span class="md">An identity for turning insight into enduring social value.</span></span>
+        </li>
+        <li>
+          <span class="mono">SkateMania</span>
+          <span><span class="md">A skateboard ramp, built by hand, for a community that needed one.</span></span>
+        </li>
+        <li>
+          <span class="mono">The Backyard</span>
+          <span><span class="md">A space designed to be gathered in, not just looked at.</span></span>
+        </li>
+        <li>
+          <span class="mono">Flint</span>
+          <span><span class="md">The studio name, and the through-line across every discipline.</span></span>
+        </li>
+      </ul>
+
+      <p class="body-2" data-rv data-d="2" style="margin-top:30px">
+        These all represent different expressions of a single practice — designing experiences
+        that people can participate in rather than simply observe.
+      </p>
+    </section>
+
+    <!-- 04 -->
+    <section class="ab-sec" id="drives">
+      <div class="eyebrow"><b>04</b><span>What Drives Me</span></div>
+      <h2 class="lg">
+        <span class="linemask"><i>The relationship</i></span>
+        <span class="linemask"><i>between design</i></span>
+        <span class="linemask"><i>and culture.</i></span>
+      </h2>
+      <p class="body-2" data-rv>
+        I enjoy understanding how people move, gather, communicate, remember, and create meaning.
+        Whether I am developing a visual identity, directing a photoshoot, prototyping an object,
+        or imagining a new public space, my goal remains the same: to create work that feels
+        intentional, useful, and lasting.
+      </p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:var(--gut);margin-top:32px;align-items:center">
+        <p class="body-2" data-rv data-d="1">
+          Growing up in Northern Nigeria has significantly influenced my perspective. It has
+          inspired me to explore local stories, architecture, youth culture, craftsmanship,
+          and community through a contemporary design lens.
+        </p>
+        <figure class="ab-plate-img clipr" data-rv data-d="2">
+          <img src="assets/img/gk/ext-01.jpg" alt="Earthen architecture with arched openings and palms — Gidan Kasa" loading="lazy">
+        </figure>
+      </div>
+    </section>
+
+    <!-- 05 -->
+    <section class="ab-sec" id="areas">
+      <div class="eyebrow"><b>05</b><span>Areas of Practice</span></div>
+      <h2 class="lg" style="margin-bottom:30px">
+        <span class="linemask"><i>Eleven tools,</i></span>
+        <span class="linemask"><i>one intent.</i></span>
+      </h2>
+      <ul class="prac" data-rv>
+        <li><button type="button"><span class="n">01</span><span class="t">Creative Systems Design</span></button></li>
+        <li><button type="button"><span class="n">02</span><span class="t">Brand Strategy &amp; Identity</span></button></li>
+        <li><button type="button"><span class="n">03</span><span class="t">Creative Direction</span></button></li>
+        <li><button type="button"><span class="n">04</span><span class="t">Experience Design</span></button></li>
+        <li><button type="button"><span class="n">05</span><span class="t">Industrial Design</span></button></li>
+        <li><button type="button"><span class="n">06</span><span class="t">Photography</span></button></li>
+        <li><button type="button"><span class="n">07</span><span class="t">Editorial Design</span></button></li>
+        <li><button type="button"><span class="n">08</span><span class="t">Spatial &amp; Environmental Design</span></button></li>
+        <li><button type="button"><span class="n">09</span><span class="t">Hospitality Concepts</span></button></li>
+        <li><button type="button"><span class="n">10</span><span class="t">Community Building</span></button></li>
+        <li><button type="button"><span class="n">11</span><span class="t">Research &amp; Storytelling</span></button></li>
+      </ul>
+    </section>
+
+    <!-- 06 -->
+    <section class="ab-sec" id="forward">
+      <div class="eyebrow"><b>06</b><span>Looking Forward</span></div>
+      <h2 class="lg">
+        <span class="linemask"><i>Blurring the</i></span>
+        <span class="linemask"><i>boundaries.</i></span>
+      </h2>
+      <p class="body-2" data-rv>
+        My ambition is to continue building projects that blur the boundaries between disciplines.
+      </p>
+
+      <ul style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:1px;
+                 background:var(--rule);border:1px solid var(--rule);margin-top:28px" data-rv data-d="1">
+        <li style="background:var(--bg);padding:clamp(20px,2.6vw,28px)">
+          <span class="mono accent">Brands</span>
+          <span class="md" style="display:block;margin-top:12px">that become communities</span></li>
+        <li style="background:var(--bg);padding:clamp(20px,2.6vw,28px)">
+          <span class="mono accent">Spaces</span>
+          <span class="md" style="display:block;margin-top:12px">that become destinations</span></li>
+        <li style="background:var(--bg);padding:clamp(20px,2.6vw,28px)">
+          <span class="mono accent">Products</span>
+          <span class="md" style="display:block;margin-top:12px">that become rituals</span></li>
+        <li style="background:var(--bg);padding:clamp(20px,2.6vw,28px)">
+          <span class="mono accent">Ideas</span>
+          <span class="md" style="display:block;margin-top:12px">that leave cultural impact</span></li>
+      </ul>
+
+      <div class="pull" data-rv data-d="2" style="margin-top:44px">
+        <p>I don't believe great design lives in one category. I believe it lives in the connections between them.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+</div>
+
+</main>
+
+<footer class="ftr wrap">
+  <a class="ftr-cta" href="mailto:hello@abdussamad.design" data-cursor="Write to me">
+    <div class="mono" style="margin-bottom:18px">Start something</div>
+    <h2 class="mega" style="margin:0">
+      <span class="linemask"><i>Work with</i></span>
+      <span class="linemask"><i>me<span class="accent">.</span></i></span>
+    </h2>
+  </a>
+
+  <div class="ftr-grid">
+    <div class="ftr-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a class="ulink" href="index.html">Index</a></li>
+        <li><a class="ulink" href="about.html">About</a></li>
+        <li><a class="ulink" href="gidan-kasa.html">Gidan Kasa</a></li>
+        <li><a class="ulink" href="directions.html">Directions</a></li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a class="ulink" href="#" data-scramble>Instagram</a></li>
+        <li><a class="ulink" href="#" data-scramble>Behance</a></li>
+        <li><a class="ulink" href="#" data-scramble>LinkedIn</a></li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a class="ulink" href="mailto:hello@abdussamad.design">hello@abdussamad.design</a></li>
+        <li class="fg2">Kaduna, Nigeria</li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>Colophon</h4>
+      <ul>
+        <li class="fg2">Archivo · Space Mono</li>
+        <li class="fg2">Instrument Serif</li>
+        <li class="fg2">Direction 01 — Field Archive</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ftr-btm">
+    <span class="mono">© 2026 Abdussamad Ibrahim — All files reserved</span>
+    <span class="mono" data-clock></span>
+    <span class="mono">Designed in Northern Nigeria</span>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="archive">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fourteen Directions — Abdussamad Ibrahim</title>
+<meta name="description" content="Fourteen complete, live art directions for the Abdussamad Ibrahim portfolio, each built from the reference set.">
+<meta name="theme-color" content="#0B0B0C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Caveat:wght@400;600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Instrument+Serif:ital@0;1&family=Outfit:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/directions.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230B0B0C'/><text y='74' x='50' font-size='68' font-family='Helvetica' font-weight='bold' fill='%23D8402F' text-anchor='middle'>A</text></svg>">
+<style>
+  .prog { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--accent);
+          transform-origin: 0 50%; transform: scaleX(0); z-index: 950; }
+  .d-hero { padding-top: 150px; padding-bottom: clamp(36px,6vw,72px); }
+  .legend { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(128px,45%),1fr)); gap: 1px;
+            background: var(--rule); border: 1px solid var(--rule); margin-top: clamp(30px,4vw,52px); }
+  .legend a { background: var(--bg); padding: 14px 15px; display: block; transition: background .3s var(--e-out); }
+  .legend a:hover { background: var(--bg-plate); }
+  .legend b { display: block; font-family: var(--f-mono); font-size: .625rem; letter-spacing: .12em;
+              color: var(--accent); margin-bottom: 7px; font-weight: 400; }
+  .legend span { font-weight: 700; letter-spacing: -.02em; font-size: .92rem; line-height: 1.15; display: block; }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="prog" data-progress aria-hidden="true"></div>
+
+<header class="hdr">
+  <div class="brand">
+    <b>Abdussamad Ibrahim</b>
+    <span class="mono">Creative Systems Designer</span>
+  </div>
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html">Index</a>
+    <a href="about.html">About</a>
+    <a href="gidan-kasa.html">Case Study</a>
+    <a href="directions.html" aria-current="page">Directions</a>
+  </nav>
+  <div class="hdr-r">
+    <span class="clock" data-clock></span>
+    <button class="tgl" data-theme-toggle aria-label="Toggle theme"><span data-theme-icon>☀</span></button>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<nav class="drawer" aria-label="Mobile">
+  <a href="index.html">Index <em>01</em></a>
+  <a href="about.html">About <em>02</em></a>
+  <a href="gidan-kasa.html">Case Study <em>03</em></a>
+  <a href="directions.html">Directions <em>04</em></a>
+</nav>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="d-hero wrap" data-hero>
+  <div class="mono" data-rv style="margin-bottom:clamp(18px,3vw,32px);display:flex;gap:20px;flex-wrap:wrap">
+    <span>Art direction study</span><span>14 routes</span><span class="accent">Live, not mockups</span>
+  </div>
+
+  <h1 class="mega" style="margin:0;text-transform:uppercase">
+    <span class="linemask"><i>Fourteen</i></span>
+    <span class="linemask"><i>directions</i></span>
+  </h1>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:var(--gut);
+              margin-top:clamp(30px,4vw,58px);padding-top:24px;border-top:1px solid var(--rule)">
+    <p class="lead" data-rv data-d="1">
+      Every image in the reference folder was pulled apart and rebuilt into fourteen complete
+      art directions for this portfolio. Each one is real HTML and CSS — not a flat mockup —
+      so you can see exactly how the type, colour and grid behave. Each also has a
+      <b style="color:var(--fg)">full page you can scroll</b>.
+    </p>
+    <p class="body-2" data-rv data-d="2">
+      Click any preview to open it full-screen and step between them with the arrow keys.
+      The site you are currently reading is built in
+      <span class="accent">Direction 01 — Field Archive</span>. Pick a different one and
+      the same three pages get rebuilt in it.
+    </p>
+  </div>
+
+  <nav class="legend" aria-label="Jump to direction">
+    <a href="#d01"><b>01</b><span>Field Archive</span></a>
+    <a href="#d02"><b>02</b><span>Classified Dossier</span></a>
+    <a href="#d03"><b>03</b><span>Editorial Riso</span></a>
+    <a href="#d04"><b>04</b><span>Acid Index</span></a>
+    <a href="#d05"><b>05</b><span>Blueprint</span></a>
+    <a href="#d06"><b>06</b><span>Desk Collage</span></a>
+    <a href="#d07"><b>07</b><span>Studio Index</span></a>
+    <a href="#d08"><b>08</b><span>Signal Orange</span></a>
+    <a href="#d09"><b>09</b><span>Halftone ID</span></a>
+    <a href="#d10"><b>10</b><span>Photocopy</span></a>
+    <a href="#d11"><b>11</b><span>Annotated</span></a>
+    <a href="#d12"><b>12</b><span>Reparations Band</span></a>
+    <a href="#d13"><b>13</b><span>Sticker Book</span></a>
+    <a href="#d14"><b>14</b><span>Postcard</span></a>
+  </nav>
+</section>
+
+<!-- ============ THE FOURTEEN ============ -->
+<section class="wrap" style="padding-bottom:var(--pad-y)">
+<div class="dirs">
+
+  <!-- ============================ 01 ============================ -->
+  <article class="dcard" id="d01" data-rv>
+    <div class="dcard-info">
+      <span class="n">01</span>
+      <h3>Field Archive</h3>
+      <p>Near-black canvas, a hairline twelve-column grid and a single documentary red. Metadata is
+         set in typewriter mono; every image arrives as a catalogued plate with registration marks.
+         Restrained, institutional, quietly expensive.</p>
+      <ul class="dtags"><li>Dark</li><li>Hairline grid</li><li>Mono metadata</li><li>Red accent</li></ul>
+      <div class="dsrc"><b>Built from</b><span>Your own dark desktop mockup · the Bureau of Control performance review · the LIQEAT folder study</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-01-field-archive.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-01-field-archive.html">About &rarr;</a><a href="case-01-field-archive.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Field Archive" data-no="01">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d01">
+        <div class="top">
+          <div><b>Abdussamad Ibrahim</b><span class="m">Creative Systems Designer</span></div>
+          <nav class="m"><span>Index</span><span>About</span><span>Case Study</span><span>Contact</span></nav>
+        </div>
+        <div class="body">
+          <div>
+            <div class="m" style="margin-bottom:34px"><span class="dot">●</span> Available for 2026 commissions &nbsp;&nbsp; Est. Northern Nigeria</div>
+            <h1>Abdussamad<br>Ibrahim<sup>®</sup></h1>
+          </div>
+          <div class="plate">
+            <div class="h"><span class="m">File / AI—001</span><span class="m dot">Active</span></div>
+            <img src="assets/img/gk/court-01.jpg" alt="">
+            <div class="r"><span class="m">Practice</span><span>Creative Systems</span></div>
+            <div class="r"><span class="m">Base</span><span>Kaduna, NG</span></div>
+            <div class="r"><span class="m">Since</span><span>2019</span></div>
+          </div>
+        </div>
+        <div class="btm">
+          <span class="m">Scroll — 03 selected files</span>
+          <span class="m">Kaduna, NG &nbsp;16:42:08</span>
+          <span class="m">© 2026</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================ 02 ============================ -->
+  <article class="dcard" id="d02" data-rv>
+    <div class="dcard-info">
+      <span class="n">02</span>
+      <h3>Classified Dossier</h3>
+      <p>The site as a physical file you are being handed. Manila board, typed sheets, a tab down the
+         right edge, photographs taped rather than placed. Projects open like case files, each with a
+         stamp and a reference number.</p>
+      <ul class="dtags"><li>Manila</li><li>Typewriter</li><li>Stamps</li><li>Tactile</li></ul>
+      <div class="dsrc"><b>Built from</b><span>The Mananggal supernatural-division files · the Arkie Seavers occurrence report · the Sylvia Plath archive box</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-02-classified-dossier.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-02-classified-dossier.html">About &rarr;</a><a href="case-02-classified-dossier.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Classified Dossier" data-no="02">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d02">
+        <span class="tab">AI — 001 / FILES</span>
+        <div class="sheet">
+          <div style="display:flex;justify-content:space-between;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6D6A60;border-bottom:1px solid #C9C3B0;padding-bottom:9px">
+            <span>Bureau of Practice · Design Division</span><span>Subject file 12000-001</span>
+          </div>
+          <span class="stampbig">Unclassified</span>
+          <h1>Abdussamad<br>Ibrahim</h1>
+          <div class="rows">
+            <div><i>Name:</i><u>Abdussamad Ibrahim</u></div>
+            <div><i>Alias:</i><u>Flint</u></div>
+            <div><i>Position:</i><u>Creative Systems Designer</u></div>
+            <div><i>Base:</i><u>Kaduna, Northern Nigeria</u></div>
+            <div><i>Active since:</i><u>2019</u></div>
+            <div style="margin-top:16px;max-width:520px;line-height:1.75">
+              <i style="width:auto">Summary:</i> Subject operates across branding, creative direction,
+              industrial design, photography, editorial, spatial thinking, hospitality and community
+              building. Does not recognise the boundaries between them.
+            </div>
+          </div>
+          <div class="photo">
+            <span class="tape a"></span><span class="tape b"></span>
+            <img src="assets/img/gk/corridor.jpg" alt="">
+            <em>EXH. 01 — GIDAN KASA</em>
+          </div>
+          <div class="foot"><span>Read only if authorised</span><span>Page 1 of 6</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================ 03 ============================ -->
+  <article class="dcard" id="d03" data-rv>
+    <div class="dcard-info">
+      <span class="n">03</span>
+      <h3>Editorial Riso</h3>
+      <p>One flooding red, one cream panel, and type set at the size of a letter someone means.
+         The whole page reads as a single printed statement — no grid gymnastics, just weight,
+         margin, and an italic serif for the human parts.</p>
+      <ul class="dtags"><li>Red flood</li><li>Cream</li><li>Statement type</li><li>Serif italic</li></ul>
+      <div class="dsrc"><b>Built from</b><span>The “Dear Client” pricing letter · the torn-paper red eyes · the red-and-white portrait crops</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-03-editorial-riso.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-03-editorial-riso.html">About &rarr;</a><a href="case-03-editorial-riso.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Editorial Riso" data-no="03">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d03">
+        <div class="panel">
+          <span class="tag">Abdussamad Ibrahim · Portfolio 2026</span>
+          <div class="sal">Dear reader,</div>
+          <h1>I am a designer in Northern Nigeria and I do not
+              work in one discipline, because the idea never
+              stays in one. A visual identity shapes perception.
+              A product encourages interaction. A space
+              influences behaviour. <em>I design systems people
+              can walk into, not deliverables they receive.</em></h1>
+          <div class="sig"><u></u><span>Kind regards, Flint</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================ 04 ============================ -->
+  <article class="dcard" id="d04" data-rv>
+    <div class="dcard-info">
+      <span class="n">04</span>
+      <h3>Acid Index</h3>
+      <p>Neon yellow-green, black bars, and condensed uppercase pushed edge to edge until the copy
+         becomes the layout. Small text drops into the gaps between lines. Loud, activist,
+         impossible to scroll past.</p>
+      <ul class="dtags"><li>Neon</li><li>Condensed</li><li>Full-bleed type</li><li>B&amp;W photo</li></ul>
+      <div class="dsrc"><b>Built from</b><span>Rep.Club’s concept-bookshop banner · the Panther’s Free Food product page</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-04-acid-index.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-04-acid-index.html">About &rarr;</a><a href="case-04-acid-index.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Acid Index" data-no="04">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d04">
+        <div class="bar">
+          <span>ABDUSSAMAD IBRAHIM</span>
+          <nav><span>Work</span><span>About</span><span>Contact</span></nav>
+          <span>KADUNA, NG</span>
+        </div>
+        <div class="type">
+          <h1>ABDUSSAMAD IBRAHIM IS A
+              <small>Branding, creative direction, industrial design, photography, editorial, spatial thinking.</small>
+              CREATIVE SYSTEMS DESIGNER
+              WORKING IN NORTHERN NIGERIA.
+              IDENTITY. OBJECTS. SPACES.
+              <small>Gidan Kasa · Aadil · Enlira · SkateMania · The Backyard · Flint</small>
+              PEOPLE. NOT DELIVERABLES.</h1>
+        </div>
+        <div class="strip">
+          <img src="assets/img/gk/living-02.jpg" alt="">
+          <img src="assets/img/aadil/cover.jpg" alt="">
+          <img src="assets/img/gk/corridor.jpg" alt="">
+          <img src="assets/img/enlira/cover.jpg" alt="">
+        </div>
+        <div class="foot"><span>SELECTED WORK 2019—2026</span><span>SCROLL ↓</span><span>© FLINT</span></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================ 05 ============================ -->
+  <article class="dcard" id="d05" data-rv>
+    <div class="dcard-info">
+      <span class="n">05</span>
+      <h3>Blueprint</h3>
+      <p>Graph paper, navy ink, dimension lines and a title block in the corner. Every project is
+         presented like a technical drawing — annotated, numbered, drawn by someone who measures
+         things. Suits the spatial and industrial half of the practice.</p>
+      <ul class="dtags"><li>Graph grid</li><li>Navy ink</li><li>Technical</li><li>Title block</li></ul>
+      <div class="dsrc"><b>Built from</b><span>The Building Trades sketching sheet · the Apollo 11 flight plan cover · your own Gidan Kasa floor plan</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-05-blueprint.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-05-blueprint.html">About &rarr;</a><a href="case-05-blueprint.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Blueprint" data-no="05">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d05">
+        <div class="frame">
+          <div class="hdr"><span>Creative Systems Design — Sheet 01</span><span>Scale 1:1 · Kaduna NG</span></div>
+          <h1>Abdussamad<br>Ibrahim</h1>
+          <div class="dim"><span>PRACTICE WIDTH — 11 DISCIPLINES</span></div>
+          <div class="plate">
+            <img src="assets/img/gk/plan.jpg" alt="">
+            <div class="cap">FIG. 01 — GIDAN KASA, GROUND PLAN</div>
+          </div>
+          <div class="block">
+            <div>DRAWN BY<b>A. IBRAHIM</b></div>
+            <div>CHECKED<b>FLINT</b></div>
+            <div>ASSIGNMENT<b>PORTFOLIO</b></div>
+            <div>UNIT<b>2026</b></div>
+          </div>
+          <div class="notes">
+            <div>01 — Identity</div><div>02 — Spatial</div><div>03 — Objects</div><div>04 — Photography</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================ 06 ============================ -->
+  <article class="dcard" id="d06" data-rv>
+    <div class="dcard-info">
+      <span class="n">06</span>
+      <h3>Desk Collage</h3>
+      <p>The homepage as a working desk. Photographs scattered, clipped and taped at angles,
+         annotated in blue ballpoint. In the built version the images are draggable — the visitor
+         arranges your work themselves.</p>
+      <ul class="dtags"><li>Collage</li><li>Handwriting</li><li>Draggable</li><li>Warm white</li></ul>
+      <div class="dsrc"><b>Built from</b><span>Daria Stolyarova’s about page · Michael Brewer’s orange scatter · the Portfolio 2026 postcard</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-06-desk-collage.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-06-desk-collage.html">About &rarr;</a><a href="case-06-desk-collage.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Desk Collage" data-no="06">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d06">
+        <div class="top"><span>Abdussamad Ibrahim — Creative Systems</span><span>Kaduna, NG · 2026</span></div>
+
+        <div class="pic p1"><span class="clip"></span><img src="assets/img/gk/room-01.jpg" alt=""><em>GIDAN KASA / 01</em></div>
+        <div class="pic p2"><span class="tape" style="top:-10px;right:-16px"></span><img src="assets/img/aadil/cover.jpg" alt=""><em>AADIL / 02</em></div>
+        <div class="pic p3"><span class="clip y"></span><img src="assets/img/gk/court-01.jpg" alt=""><em>COURTYARD / 03</em></div>
+        <div class="pic p4"><span class="tape" style="top:-10px;left:-14px"></span><img src="assets/img/enlira/cover.jpg" alt=""><em>ENLIRA / 04</em></div>
+        <div class="pic p5"><img src="assets/img/gk/corridor.jpg" alt=""><em>CORRIDOR / 05</em></div>
+
+        <div class="note1 hand">it's a pleasure to meet you!</div>
+        <div class="note2">
+          ABDUSSAMAD IBRAHIM, ALSO KNOWN AS FLINT.<br>
+          A MULTIDISCIPLINARY DESIGNER WORKING ACROSS<br>
+          IDENTITY, CULTURE, OBJECTS, SPACES AND<br>
+          EXPERIENCES. I DESIGN SYSTEMS, NOT<br>
+          DELIVERABLES.
+        </div>
+        <svg class="scrib" viewBox="0 0 210 84" fill="none" aria-hidden="true">
+          <path d="M6 62c26-46 44 6 64-16s24 30 48 8 34 4 52-18" stroke="#1D3FBF" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="176" cy="30" r="9" stroke="#1D3FBF" stroke-width="2.4"/>
+        </svg>
+        <div class="btm"><span>Drag anything, anywhere</span><span>Selected work — 06 files</span><span>© 2026</span></div>
+      </div>
+    </div>
+  </article>
+
+
+  <!-- ============================ 07 ============================ -->
+  <article class="dcard" id="d07" data-rv>
+    <div class="dcard-info">
+      <span class="n">07</span>
+      <h3>Studio Index</h3>
+      <p>Quiet white card, a photo mosaic on the left and a numbered list of work on the right,
+         with client and year set as superscript. Columns / List / Grid toggles sit in the footer bar.
+         The most conventional of the ten, and the most immediately legible.</p>
+      <ul class="dtags"><li>White</li><li>Neo-grotesque</li><li>Numbered list</li><li>View toggles</li></ul>
+      <div class="dsrc"><b>Built from</b><span>The reference you sent — mosaic plus numbered index with Columns / List / Grid switches</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-07-studio-index.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-07-studio-index.html">About &rarr;</a><a href="case-07-studio-index.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Studio Index" data-no="07">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d07">
+        <div class="card">
+          <div class="split">
+            <div class="mosaic">
+              <img src="assets/img/gk/court-01.jpg" alt="">
+              <img src="assets/img/aadil/cover.jpg" alt="">
+              <img src="assets/img/gk/room-01.jpg" alt="">
+              <img src="assets/img/enlira/cover.jpg" alt="">
+              <img src="assets/img/gk/corridor.jpg" alt="">
+              <img src="assets/img/gk/living-02.jpg" alt="">
+            </div>
+            <ul class="list">
+              <li><span>Gidan Kasa</span><sup>Hospitality ↗ 2024</sup><u></u><b>1</b></li>
+              <li><span>Aadil</span><sup>F&amp;B ↗ 2024</sup><u></u><b>2</b></li>
+              <li><span>Enlira</span><sup>Impact ↗ 2025</sup><u></u><b>3</b></li>
+              <li><span>SkateMania</span><sup>Community ↗ 2023</sup><u></u><b>4</b></li>
+              <li><span>The Backyard</span><sup>Spatial ↗ 2023</sup><u></u><b>5</b></li>
+              <li><span>Flint</span><sup>Self-initiated ↗ 2019</sup><u></u><b>6</b></li>
+              <li><span>Material Studies</span><sup>Research ↗ 2025</sup><u></u><b>7</b></li>
+            </ul>
+          </div>
+          <div class="foot">
+            <span class="reg">®</span>
+            <div class="seg"><i>Columns</i><i class="on">List</i><i>Grid</i></div>
+            <span>About &nbsp; Instagram ↗ &nbsp; LinkedIn ↗</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================ 08 ============================ -->
+  <article class="dcard" id="d08" data-rv>
+    <div class="dcard-info">
+      <span class="n">08</span>
+      <h3>Signal Orange</h3>
+      <p>Black field, hairline orange frame, and condensed uppercase in solid blocks. Data sits in a
+         strip of boxes along the bottom. Reads as sport, engineering and product — a strong fit for
+         the industrial design side of the practice.</p>
+      <ul class="dtags"><li>Black + orange</li><li>Boxed grid</li><li>Condensed</li><li>Data strip</li></ul>
+      <div class="dsrc"><b>Built from</b><span>Goals Game Inc’s nav and hero · KLOAQ’s flooded orange homepage</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-08-signal-orange.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-08-signal-orange.html">About &rarr;</a><a href="case-08-signal-orange.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Signal Orange" data-no="08">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d08">
+        <div class="frame">
+          <div class="top"><span>ABDUSSAMAD IBRAHIM ®</span><span>WORK / ABOUT / CONTACT</span><span>KADUNA — NG</span></div>
+          <div class="mid">
+            <div class="lft">
+              <h1>Creative<br>Systems<br>Designer</h1>
+              <div class="fill">Identity · Objects · Spaces</div>
+            </div>
+            <div class="rgt">
+              <img src="assets/img/gk/living-02.jpg" alt="">
+              <span class="lbl">FIG. 01 — GIDAN KASA</span>
+            </div>
+          </div>
+          <div class="grid">
+            <div>Disciplines<b>11</b></div>
+            <div>Case files<b>03</b></div>
+            <div>Projects<b>06</b></div>
+            <div>Since<b>2019</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================ 09 ============================ -->
+  <article class="dcard" id="d09" data-rv>
+    <div class="dcard-info">
+      <span class="n">09</span>
+      <h3>Halftone ID</h3>
+      <p>Passport photographs on a dot screen, ghosted outline type behind, a signature rule under
+         each frame. Every project is issued an ID card. Cool, printed and slightly bureaucratic —
+         a good frame for the photography and portrait work.</p>
+      <ul class="dtags"><li>Halftone</li><li>ID cards</li><li>Ghost type</li><li>Muted</li></ul>
+      <div class="dsrc"><b>Built from</b><span>The dot-screen portraits · the signed yearbook grid · the candy corp embossed cover</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-09-halftone-id.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-09-halftone-id.html">About &rarr;</a><a href="case-09-halftone-id.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Halftone ID" data-no="09">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d09">
+        <div class="ghost">Flint<br>Archive</div>
+        <div class="top">
+          <div><span class="m">Abdussamad Ibrahim</span><br><span class="m">Creative Systems Designer</span></div>
+          <span class="m">Identification series — 2026</span>
+        </div>
+        <div class="ids">
+          <div class="id"><div class="ph"><img src="assets/img/gk/court-01.jpg" alt=""></div>
+            <div class="cap"><span>Gidan Kasa</span><span>01</span></div><div class="sig"></div></div>
+          <div class="id"><div class="ph"><img src="assets/img/aadil/cover.jpg" alt=""></div>
+            <div class="cap"><span>Aadil</span><span>02</span></div><div class="sig"></div></div>
+          <div class="id"><div class="ph"><img src="assets/img/enlira/cover.jpg" alt=""></div>
+            <div class="cap"><span>Enlira</span><span>03</span></div><div class="sig"></div></div>
+          <div class="id"><div class="ph"><img src="assets/img/gk/room-01.jpg" alt=""></div>
+            <div class="cap"><span>Interiors</span><span>04</span></div><div class="sig"></div></div>
+        </div>
+        <div class="btm">
+          <h1>Selected<br>Work</h1>
+          <span class="m">Kaduna, Northern Nigeria · Issued 2026 · Valid indefinitely</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================ 10 ============================ -->
+  <article class="dcard" id="d10" data-rv>
+    <div class="dcard-info">
+      <span class="n">10</span>
+      <h3>Photocopy</h3>
+      <p>A page that has been through the machine one too many times. Blown-out toner, vertical
+         drum streaks, ghosted duplicate scans bleeding off both edges, and the name reduced to a
+         cut strip of paper laid on top. Degraded on purpose, and unmistakably handmade.</p>
+      <ul class="dtags"><li>Xerox grey</li><li>Blown contrast</li><li>Cut strips</li><li>Ghost scans</li></ul>
+      <div class="dsrc"><b>Built from</b><span>The Christopher Padilla annotated photocopy you sent — the toner degradation and cut-and-taped name strip</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-10-photocopy.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-10-photocopy.html">About &rarr;</a><a href="case-10-photocopy.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Photocopy" data-no="10">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d10">
+        <div class="sheet">
+          <div class="top"><span>Fotocopia — 79CB1916</span><span>1072 × 1290 (1217KB)</span></div>
+          <div class="scan gh l"><img src="assets/img/gk/room-01.jpg" alt=""></div>
+          <div class="scan mid"><img src="assets/img/gk/corridor.jpg" alt=""></div>
+          <div class="scan gh r"><img src="assets/img/gk/room-01.jpg" alt=""></div>
+          <div class="strip"><b>ABDUSSAMAD IBRAHIM</b></div>
+          <div class="sub">
+            <div>Creative Systems Designer since (dos mil diecinueve) <u>2019</u></div>
+            <div style="margin-top:3px">KADUNA · NG</div>
+          </div>
+          <div class="hand" style="left:60px;top:180px;width:180px">please do not print<br>this without<br>checking&hellip;</div>
+          <div class="hand" style="right:64px;top:250px;width:230px">contact: hello@abdussamad.design<br>+234 &mdash;&mdash;&mdash;&mdash;<br>whenever.</div>
+          <div class="hand sig" style="font-size:26px">A. Ibrahim<span style="display:block;font-size:15px">8:46 (this is not a portrait.)</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================ 11 ============================ -->
+  <article class="dcard" id="d11" data-rv>
+    <div class="dcard-info">
+      <span class="n">11</span>
+      <h3>Annotated</h3>
+      <p>A clean, almost severe layout that someone has then marked up by hand — blue ballpoint
+         circles, arrows pointing at what matters, file sizes scrawled in the margin, a signature at
+         the bottom. The annotation layer is the interface: it moves as you scroll.</p>
+      <ul class="dtags"><li>Ballpoint blue</li><li>Arrows &amp; circles</li><li>Marginalia</li><li>Signed</li></ul>
+      <div class="dsrc"><b>Built from</b><span>The same Padilla sheet — but taking the handwriting layer rather than the toner as the idea</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-11-annotated.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-11-annotated.html">About &rarr;</a><a href="case-11-annotated.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Annotated" data-no="11">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d11">
+        <div class="top"><span>Abdussamad Ibrahim — Creative Systems Designer</span><span>Sheet 01 / 06 · Kaduna NG</span></div>
+        <h1>Abdussamad<br>Ibrahim</h1>
+        <span class="circ" style="left:44px;top:118px;width:346px;height:112px;rotate:-1.6deg"></span>
+        <span class="under" style="left:52px;top:238px;width:300px;rotate:.6deg"></span>
+        <div class="hand" style="left:790px;top:126px;font-size:24px;width:270px">not a studio &mdash;<br>one person, many tools.</div>
+        <svg class="ann" style="left:640px;top:150px;width:150px;height:76px" viewBox="0 0 150 76" fill="none" aria-hidden="true">
+          <path d="M146 12C112 6 52 22 8 60" stroke="#1D3FBF" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M8 60l24-5M8 60l7-23" stroke="#1D3FBF" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+        <div class="row">
+          <div><img src="assets/img/gk/living-02.jpg" alt=""></div>
+          <div>
+            <p>Branding, creative direction, industrial design, photography, editorial design,
+               spatial thinking, hospitality concepts and community building. Not separate
+               disciplines — different ways of expressing the same idea.</p>
+            <p style="margin-top:16px">Rather than creating isolated deliverables, I design systems
+               that connect people, places, ideas and experiences.</p>
+          </div>
+        </div>
+        <div class="hand" style="left:60px;top:610px;font-size:19px">1072&times;1290 (1217KB).</div>
+        <span class="circ" style="left:44px;top:598px;width:250px;height:44px;rotate:1.2deg"></span>
+        <div class="hand" style="right:120px;bottom:118px;font-size:34px">A. Ibrahim</div>
+        <div class="btm"><span>Marked up 8:46</span><span>Gidan Kasa · Aadil · Enlira</span><span>© 2026</span></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================ 12 ============================ -->
+  <article class="dcard" id="d12" data-rv>
+    <div class="dcard-info">
+      <span class="n">12</span>
+      <h3>Reparations Band</h3>
+      <p>Your Rep.Club banner taken literally: a neon slab of wide bold grotesque with small text
+         wedged into the gaps, sitting above a black band where oversized letterforms are cropped by
+         the edge and a photograph pushes in front of them.</p>
+      <ul class="dtags"><li>Neon slab</li><li>Wide grotesque</li><li>Inline insets</li><li>Cropped letters</li></ul>
+      <div class="dsrc"><b>Built from</b><span>The Rep.Club concept-bookshop banner you sent — distinct from 04, which takes the condensed route</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-12-reparations-band.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-12-reparations-band.html">About &rarr;</a><a href="case-12-reparations-band.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Reparations Band" data-no="12">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d12">
+        <div class="board">
+          <div class="neon">
+            <span class="ig">@abdussamad.ibrahim</span>
+            <h1>ABDUSSAMAD IBRAHIM IS A CREATIVE
+              <small>Branding, identity, creative direction, industrial design, photography &amp; editorial</small>
+              SYSTEMS DESIGNER &amp; BUILDER OF PLACES
+              IN NORTHERN NIGERIA. FLINT-OWNED.</h1>
+            <div class="tail">Gidan Kasa, Aadil, Enlira, SkateMania, The Backyard, Flint, Material Studies,
+              Spatial Concepts, Hospitality, Community Building, Research and Storytelling</div>
+          </div>
+          <div class="band">
+            <div class="giant">FLINT</div>
+            <img src="assets/img/gk/corridor.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================ 13 ============================ -->
+  <article class="dcard" id="d13" data-rv>
+    <div class="dcard-info">
+      <span class="n">13</span>
+      <h3>Sticker Book</h3>
+      <p>Every project becomes a die-cut sticker — perforated edges, peel shadow, scattered across
+         a dotted field and rotated by hand. Warm, generous and immediately likeable. In the built
+         version they lift and straighten as you hover.</p>
+      <ul class="dtags"><li>Die-cut</li><li>Perforated</li><li>Rounded geometric</li><li>Playful</li></ul>
+      <div class="dsrc"><b>Built from</b><span>The Qubril Portfolio 2026 scrapbook you sent — taking the sticker-sheet idea rather than the postcard</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-13-sticker-book.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-13-sticker-book.html">About &rarr;</a><a href="case-13-sticker-book.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Sticker Book" data-no="13">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d13">
+        <div class="top"><span>Abdussamad Ibrahim — Flint</span><span>Kaduna, NG · Sheet of 06</span></div>
+        <div class="stk s1"><img src="assets/img/gk/room-01.jpg" alt=""><em>Gidan Kasa</em></div>
+        <div class="stk s2"><img src="assets/img/aadil/cover.jpg" alt=""><em>Aadil</em></div>
+        <div class="stk s3"><img src="assets/img/gk/court-01.jpg" alt=""><em>Courtyard</em></div>
+        <div class="stk s4"><img src="assets/img/enlira/cover.jpg" alt=""><em>Enlira</em></div>
+        <div class="stk s5"><img src="assets/img/gk/corridor.jpg" alt=""><em>Corridor</em></div>
+        <div class="word">
+          <i>Hi! I'm Flint</i>
+          <b>Portfolio<br>2026</b>
+          <p>Creative systems designer working across identity, culture, objects, spaces and experiences.</p>
+        </div>
+        <div class="badge">Peel<br>me</div>
+        <div class="btm"><span>Drag &amp; arrange</span><span>06 stickers</span><span>© 2026</span></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================ 14 ============================ -->
+  <article class="dcard" id="d14" data-rv>
+    <div class="dcard-info">
+      <span class="n">14</span>
+      <h3>Postcard</h3>
+      <p>One perforated card set on a full-bleed landscape, carrying a lined index card of what you
+         do, a clipped polaroid, a postage stamp and the year in big rounded type. The whole site
+         behaves like something posted to you rather than a page you loaded.</p>
+      <ul class="dtags"><li>Perforated edge</li><li>Lined card</li><li>Polaroid</li><li>Photo backdrop</li></ul>
+      <div class="dsrc"><b>Built from</b><span>The same Qubril reference — this one keeps the postcard object and the landscape behind it</span></div>
+      <p style="margin-top:20px"><a class="btn solid" href="direction-14-postcard.html" data-mag="0.2"><span>Open the full page</span><span>&rarr;</span></a></p>
+      <p class="dlinks"><a href="about-14-postcard.html">About &rarr;</a><a href="case-14-postcard.html">Case study &rarr;</a></p>
+    </div>
+    <div class="dp" data-dp data-name="Postcard" data-no="14">
+      <span class="dp-open">Open full screen</span>
+      <div class="dp-stage d14">
+        <div class="bg"><img src="assets/img/gk/ext-01.jpg" alt=""></div>
+        <div class="card">
+          <div class="lined">
+            <b>Hi! I'm Flint</b>
+            <span>Creative Systems Designer</span>
+            <span>Brand Strategy &amp; Identity</span>
+            <span>Creative Direction</span>
+            <span>Industrial Design</span>
+            <span>Photography</span>
+            <span>Spatial &amp; Hospitality</span>
+          </div>
+          <div class="postage"><span>NG<br>2026</span></div>
+          <div class="polaroid"><span class="clip"></span><img src="assets/img/gk/room-01.jpg" alt=""></div>
+          <div class="word"><b>Portfolio</b><i>2026</i></div>
+          <div class="stampmark">Abdussamad Ibrahim<br>Kaduna, Northern Nigeria<br>Posted 2026</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+</div>
+</section>
+
+<!-- ============ HOW TO CHOOSE ============ -->
+<section class="sec wrap rule-t">
+  <div class="eyebrow"><b>—</b><span>How to choose</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:var(--gut)">
+    <div>
+      <h2 class="lg" style="margin-bottom:22px">
+        <span class="linemask"><i>Pick the one</i></span>
+        <span class="linemask"><i>you'd defend.</i></span>
+      </h2>
+      <p class="body-2" data-rv>
+        These are not ten skins on one layout — the grid, the type and the reading order genuinely
+        differ. That means the choice is strategic, not decorative. A few honest notes on what each
+        one costs you:
+      </p>
+    </div>
+    <div>
+      <div class="note" style="display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule)" data-rv>
+        <b class="mono accent" style="min-width:96px">Loudest</b>
+        <span>04 Acid Index, 08 Signal Orange and 12 Reparations Band get remembered, but they compete with your work for attention.</span></div>
+      <div class="note" style="display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule)" data-rv data-d="1">
+        <b class="mono accent" style="min-width:96px">Quietest</b>
+        <span>07 Studio Index and 01 Field Archive get out of the way — best if the imagery carries everything.</span></div>
+      <div class="note" style="display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule)" data-rv data-d="2">
+        <b class="mono accent" style="min-width:96px">Warmest</b>
+        <span>13 Sticker Book and 14 Postcard read as generous and human — they lower the barrier to approaching you.</span></div>
+      <div class="note" style="display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule)" data-rv data-d="3">
+        <b class="mono accent" style="min-width:96px">Cleverest</b>
+        <span>11 Annotated is the one an art director will remember, because the handwriting says something the layout can't.</span></div>
+      <div class="note" style="display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule)" data-rv data-d="4">
+        <b class="mono accent" style="min-width:96px">Riskiest</b>
+        <span>02 Dossier, 06 Collage and 10 Photocopy are delightful once, and need real discipline to stay usable at scale.</span></div>
+      <div class="note" style="display:flex;gap:16px;padding:14px 0" data-rv data-d="5">
+        <b class="mono accent" style="min-width:96px">Best fit</b>
+        <span>05 Blueprint if the spatial and industrial work becomes the centre of the practice.</span></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="ftr wrap">
+  <a class="ftr-cta" href="mailto:hello@abdussamad.design" data-cursor="Write to me">
+    <div class="mono" style="margin-bottom:18px">Chosen one?</div>
+    <h2 class="mega" style="margin:0">
+      <span class="linemask"><i>Let's build</i></span>
+      <span class="linemask"><i>it out<span class="accent">.</span></i></span>
+    </h2>
+  </a>
+
+  <div class="ftr-grid">
+    <div class="ftr-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a class="ulink" href="index.html">Index</a></li>
+        <li><a class="ulink" href="about.html">About</a></li>
+        <li><a class="ulink" href="gidan-kasa.html">Gidan Kasa</a></li>
+        <li><a class="ulink" href="directions.html">Directions</a></li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>This page</h4>
+      <ul>
+        <li class="fg2">14 live directions</li>
+        <li class="fg2">Authored at 1280×800</li>
+        <li class="fg2">Real HTML, not images</li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a class="ulink" href="mailto:hello@abdussamad.design">hello@abdussamad.design</a></li>
+        <li class="fg2">Kaduna, Nigeria</li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>Colophon</h4>
+      <ul>
+        <li class="fg2">Archivo · Space Mono · Anton</li>
+        <li class="fg2">Courier Prime · Caveat</li>
+        <li class="fg2">Instrument Serif</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ftr-btm">
+    <span class="mono">© 2026 Abdussamad Ibrahim — All files reserved</span>
+    <span class="mono" data-clock></span>
+    <span class="mono">Designed in Northern Nigeria</span>
+  </div>
+</footer>
+
+<!-- FULLSCREEN MODAL -->
+<div class="dmodal" role="dialog" aria-modal="true" aria-label="Direction preview">
+  <div class="dmodal-hd">
+    <div>
+      <span class="mono" data-dm-no>01</span>
+      <span style="font-family:var(--f-display);font-weight:700;font-size:1.15rem;letter-spacing:-.02em;margin-left:10px" data-dm-name>Field Archive</span>
+    </div>
+    <button class="dmodal-x" aria-label="Close preview">✕</button>
+  </div>
+  <div class="dmodal-body"><div class="dp" data-dm-host></div></div>
+  <div class="dmodal-ft">
+    <span class="mono">← → to step between directions · Esc to close</span>
+    <div class="dmodal-nav">
+      <button data-dm-prev aria-label="Previous direction">←</button>
+      <button data-dm-next aria-label="Next direction">→</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/site.js"></script>
+<script src="assets/js/directions.js"></script>
+</body>
+</html>
