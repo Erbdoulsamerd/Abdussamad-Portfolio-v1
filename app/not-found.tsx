@@ -12,11 +12,11 @@ export default function NotFound() {
           Missing<span className="accent">.</span>
         </h1>
         <p className="lead" style={{ marginTop: 26, maxWidth: '44ch' }}>
-          That page isn&rsquo;t in the index. It may have been renamed, or it was never filed in the first place.
+          That page isn&rsquo;t in the archive. It may have been renamed, or it was never filed in the first place.
         </p>
         <p style={{ marginTop: 28, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-          <Link className="btn solid" href="/"><span>Back to the index</span></Link>
-          <Link className="btn" href="/work"><span>Browse the work</span></Link>
+          <Link className="btn solid" href="/"><span>Back to the work</span></Link>
+          <Link className="btn" href="/about"><span>About the practice</span></Link>
         </p>
       </section>
       <Footer />

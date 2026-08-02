@@ -2,11 +2,12 @@
 
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
+import { subscribeScroll } from './Motion';
 
 export type Curio = { src?: string; alt: string; label: string; w: number; h: number };
 
 /**
- * Where each print lands — a dealt pile, not a neat stack.
+ * Where each print lands: a dealt pile, not a neat stack.
  * x/y are percentages of the card's own box, r is degrees.
  */
 const REST = [
@@ -18,8 +19,8 @@ const REST = [
   { x: 4, y: 4, r: -1.5 },
 ];
 
-/** Head start, as a share of the stage, so the first print is already flying by the time the stage pins. */
-const PRE = 0.32;
+/** Head start, as a share of the stage, so the second print is already flying by the time the stage pins. */
+const PRE = 0.25;
 /** Share of the runway spent dealing; the tail holds the finished pile before the pin lets go. */
 const DEAL = 0.9;
 /** How much each print's flight overlaps the next, in segments. */
@@ -29,11 +30,12 @@ const clamp = (n: number, a: number, b: number) => (n < a ? a : n > b ? b : n);
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
 /**
- * Collected curiosities as a scroll-dealt deck: the stage pins, prints fly in from
- * alternating sides and drop onto the pile one per scroll segment, then the pin
- * releases into the next section.
+ * Collected curiosities as a scroll-dealt deck. The first print is already lying
+ * on the table when the stage arrives, so the section never reads as empty. The
+ * stage then pins and the rest fly in from alternating sides, one per scroll
+ * segment, before the pin releases into the next section.
  *
- * Without JS — or under reduced motion — the same markup stays a plain pinboard
+ * Without JS, or under reduced motion, the same markup stays a plain pinboard
  * grid (see `.cstack` in globals.css); the `live` class is what swaps in the deck.
  */
 export default function CurioStack({ items }: { items: Curio[] }) {
@@ -53,23 +55,28 @@ export default function CurioStack({ items }: { items: Curio[] }) {
     wrap.classList.add('live');
 
     const n = cards.length;
-    const seg = 1 / n;
+    // The first print does not fly, so the runway is divided between the rest.
+    const dealers = Math.max(n - 1, 1);
+    const seg = 1 / dealers;
     let dims = cards.map(() => ({ w: 0, h: 0 }));
     let vw = 0;
+    let vh = 0;
     let stageH = 0;
 
-    // Cache the boxes: reading them per frame would force a layout on every scroll
-    // tick, and they only change on resize (or when an image finally lands).
-    // clientWidth, not innerWidth — it is the layout viewport the cards are laid
+    // Cache the boxes: reading them per frame would force a layout on every
+    // scroll tick, and they only change on resize (or when an image lands).
+    // clientWidth, not innerWidth: it is the layout viewport the cards are laid
     // out in, so the fly-in distance stays honest on pinch-zoomed mobile.
-    const measure = () => {
+    const measure = (height: number) => {
       vw = document.documentElement.clientWidth;
+      vh = height;
       stageH = stage.offsetHeight;
       dims = cards.map((c) => ({ w: c.offsetWidth, h: c.offsetHeight }));
     };
 
-    const upd = () => {
-      const r = wrap.getBoundingClientRect();
+    const paint = (r: DOMRect, height: number) => {
+      if (vw !== document.documentElement.clientWidth || vh !== height) measure(height);
+
       const pre = stageH * PRE;
       const span = r.height - stageH + pre;
       const p = span > 0 ? clamp((pre - r.top) / span, 0, 1) : 0;
@@ -81,9 +88,10 @@ export default function CurioStack({ items }: { items: Curio[] }) {
         const rest = REST[i % REST.length];
         const dir = i % 2 ? 1 : -1;
 
-        const t = easeOut(clamp((dealt - i * seg) / (seg * OVERLAP), 0, 1));
+        // Print one is always home; the others are dealt from index 1 onward.
+        const t = i === 0 ? 1 : easeOut(clamp((dealt - (i - 1) * seg) / (seg * OVERLAP), 0, 1));
         // Prints under the top of the pile sink a little as the next ones land.
-        const under = clamp(dealt * n - (i + 1), 0, 3);
+        const under = clamp(dealt * dealers - i, 0, 3);
 
         const fromX = dir * (vw / 2 + w / 2 + 40);
         const x = fromX * (1 - t) + (rest.x / 100) * w * t;
@@ -98,34 +106,24 @@ export default function CurioStack({ items }: { items: Curio[] }) {
       }
     };
 
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        ticking = false;
-        upd();
-      });
-    };
-    const onResize = () => {
-      measure();
-      upd();
-    };
+    const height = window.innerHeight || document.documentElement.clientHeight;
+    measure(height);
+    paint(wrap.getBoundingClientRect(), height);
 
-    measure();
-    upd();
+    // One shared engine drives this; a listener of its own would fight Lenis.
+    const stop = subscribeScroll(wrap, paint);
 
     // Images arrive after first paint and change the card boxes under us.
+    const remeasure = () => {
+      measure(window.innerHeight || document.documentElement.clientHeight);
+      paint(wrap.getBoundingClientRect(), vh);
+    };
     const pending = Array.from(wrap.querySelectorAll('img')).filter((im) => !im.complete);
-    pending.forEach((im) => im.addEventListener('load', onResize, { once: true }));
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onResize);
+    pending.forEach((im) => im.addEventListener('load', remeasure, { once: true }));
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onResize);
-      pending.forEach((im) => im.removeEventListener('load', onResize));
+      stop();
+      pending.forEach((im) => im.removeEventListener('load', remeasure));
       wrap.classList.remove('live');
       cards.forEach((c) => {
         c.style.transform = '';
@@ -135,7 +133,11 @@ export default function CurioStack({ items }: { items: Curio[] }) {
   }, [items.length]);
 
   return (
-    <div className="cstack" ref={wrapRef} style={{ ['--n' as string]: items.length }}>
+    <div
+      className="cstack"
+      ref={wrapRef}
+      style={{ ['--n' as string]: Math.max(items.length - 1, 1) }}
+    >
       <div className="cstack-stage" ref={stageRef}>
         <div className="cstack-deck">
           {items.map((c, i) => (

@@ -23,6 +23,17 @@ export function scrollToTarget(target: Element | number, offset = -86) {
   window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
 }
 
+/** The element the current URL hash points at, if it resolves to one. */
+function hashTarget(): Element | null {
+  const hash = window.location.hash;
+  if (!hash || hash === '#') return null;
+  try {
+    return document.querySelector(hash);
+  } catch {
+    return null;
+  }
+}
+
 export default function SmoothScroll() {
   const pathname = usePathname();
 
@@ -62,31 +73,40 @@ export default function SmoothScroll() {
     };
   }, []);
 
-  // App Router keeps the DOM alive across routes — reset Lenis to the top.
+  // App Router keeps the DOM alive across routes — reset Lenis to the top, unless
+  // the URL asked for a section (/#work from another page) and it has rendered.
   useEffect(() => {
+    const el = hashTarget();
+    if (el) {
+      scrollToTarget(el);
+      return;
+    }
     const l = getLenis();
     if (l) l.scrollTo(0, { immediate: true });
     else window.scrollTo(0, 0);
   }, [pathname]);
 
-  // Any in-page anchor glides instead of jumping.
+  // Any in-page anchor glides instead of jumping. Covers bare `#id` and the
+  // full `/#id` form, so long as it lands on the page we are already on — a hash
+  // on some other route is the router's business, handled by the effect above.
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
-      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
-      const a = (e.target as HTMLElement)?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
-      if (!a) return;
-      const hash = a.getAttribute('href');
-      if (!hash || hash === '#') return;
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = (e.target as HTMLElement)?.closest?.('a[href]') as HTMLAnchorElement | null;
+      if (!a || a.target === '_blank') return;
+      const url = new URL(a.href, location.href);
+      if (url.origin !== location.origin || url.pathname !== location.pathname) return;
+      if (!url.hash || url.hash === '#') return;
       let el: Element | null = null;
       try {
-        el = document.querySelector(hash);
+        el = document.querySelector(url.hash);
       } catch {
         return;
       }
       if (!el) return;
       e.preventDefault();
       scrollToTarget(el);
-      history.replaceState(null, '', hash);
+      history.replaceState(null, '', url.hash);
     };
     document.addEventListener('click', onClick);
     return () => document.removeEventListener('click', onClick);

@@ -76,6 +76,15 @@ function subscribe(sub: Sub) {
   };
 }
 
+/**
+ * Drive an effect off the shared engine instead of a listener of its own. `tick`
+ * runs at most once a frame with the element's rect and the viewport height;
+ * return `true` to stop watching. Returns the unsubscribe.
+ */
+export function subscribeScroll(el: Element, tick: Sub['tick']) {
+  return subscribe({ el, tick });
+}
+
 /** Add `.in` as the element crosses into view, then stop watching it. */
 function observe(el: Element) {
   if (typeof window === 'undefined') {

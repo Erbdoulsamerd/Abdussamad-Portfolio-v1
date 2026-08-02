@@ -132,8 +132,11 @@ export function Header() {
   // close the drawer whenever the route changes
   useEffect(() => setOpen(false), [pathname]);
 
-  const isCurrent = (href: string) =>
-    href === '/' ? pathname === '/' : pathname.startsWith(href);
+  // Work is current on the front page and on any case study filed under it.
+  const isCurrent = (n: { href: string; match?: string }) =>
+    [n.href, n.match ?? n.href].some((p) =>
+      p === '/' ? pathname === '/' : pathname === p || pathname.startsWith(`${p}/`),
+    );
 
   return (
     <>
@@ -145,7 +148,7 @@ export function Header() {
 
         <nav className="nav" aria-label="Primary">
           {nav.map((n) => (
-            <Link key={n.href} href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>
+            <Link key={n.href} href={n.href} aria-current={isCurrent(n) ? 'page' : undefined}>
               {n.label}
             </Link>
           ))}

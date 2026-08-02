@@ -763,7 +763,7 @@ html.preloaded .pre { display: none; }
 .cstack-card:nth-child(5) { rotate: -1.2deg; margin-top: clamp(12px,2.4vw,34px); }
 .cstack-card:nth-child(6) { rotate:   .9deg; }
 @media (hover: hover) {
-  .cstack-card { transition: translate .5s var(--e-out), scale .5s var(--e-out); }
+  .cstack-card { transition: translate var(--d-base) var(--e-out), scale var(--d-base) var(--e-out); }
   .cstack:not(.live) .cstack-card:hover { translate: 0 -6px; scale: 1.025; }
 }
 
@@ -779,14 +779,13 @@ html.preloaded .pre { display: none; }
   width: clamp(260px, 34vw, 520px); rotate: none; margin: 0;
   opacity: 0; transition: none; will-change: transform, opacity;
 }
+/* Print one is already on the table, so the stage is never empty on arrival. */
+.cstack.live .cstack-card:first-child { opacity: 1; }
 .cstack.live .cstack-card[data-portrait] { width: clamp(190px, 24vw, 370px); }
 @media (max-width: 620px) {
   .cstack.live .cstack-card { width: min(76vw, 340px); }
   .cstack.live .cstack-card[data-portrait] { width: min(54vw, 250px); }
 }
-
-/* ---------- WORK LISTING ---------- */
-.work-hero { padding-top: 152px; padding-bottom: clamp(30px,5vw,58px); }
 
 /* ---------- NEXT PROJECT (case-study loop) ---------- */
 .nextp {

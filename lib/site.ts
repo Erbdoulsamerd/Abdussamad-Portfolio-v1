@@ -17,11 +17,12 @@ export const site = {
   cvUrl: 'https://drive.google.com/file/d/1uZC4pG1p4Q0-fh3fzxXcSkVojvbjIfe6/view',
 } as const;
 
-export const nav = [
-  { label: 'Index', href: '/' },
-  { label: 'Work', href: '/work' },
+/** The front page is the work, so there is no separate index entry. `match` adds
+    a second path that also counts as current: the case studies under /work. */
+export const nav: readonly { label: string; href: string; match?: string }[] = [
+  { label: 'Work', href: '/', match: '/work' },
   { label: 'About', href: '/about' },
-] as const;
+];
 
 /** `href: '#'` marks a profile that doesn't exist yet — the footer renders it
     as inert text rather than a link that jumps the page to the top. */

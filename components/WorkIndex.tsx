@@ -45,9 +45,9 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
     <>
       <div className="idx-bar">
         <h2 className="lg" style={{ margin: 0 }}>
-          Index<span className="accent">.</span>
+          Work<span className="accent">.</span>
         </h2>
-        <div className="seg" role="tablist" aria-label="Index view">
+        <div className="seg" role="tablist" aria-label="Work view">
           {VIEWS.map((v) => (
             <button
               key={v}
