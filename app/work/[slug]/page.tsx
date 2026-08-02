@@ -19,9 +19,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const p = getProject(slug);
   if (!p) return {};
   return {
-    title: `${p.title} — Case Study`,
+    title: `${p.title} · Case Study`,
     description: p.lede,
-    openGraph: { title: `${p.title} — Case Study`, description: p.lede, images: [p.cover] },
+    openGraph: { title: `${p.title} · Case Study`, description: p.lede, images: [p.cover] },
   };
 }
 
@@ -196,8 +196,8 @@ export default async function CaseStudy({ params }: Params) {
             </h2>
             <Reveal as="p" className="body-2">
               The whole scheme was resolved in 3D first. Working in the model rather than in elevation meant
-              light could be tested directly — moving the sun until the stair threw the right shadow, then
-              letting the plan settle around what had been found.
+              light could be tested directly. The sun was moved until the stair threw the right shadow, then
+              the plan settled around what had been found.
             </Reveal>
           </div>
           <div className="cs-2col">

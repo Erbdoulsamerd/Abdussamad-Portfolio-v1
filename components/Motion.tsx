@@ -8,32 +8,94 @@ import {
   type ElementType,
   type ReactNode,
 } from 'react';
+import { getLenis } from './SmoothScroll';
 
-/** Shared IntersectionObserver — one instance for every revealed element. */
-let io: IntersectionObserver | null = null;
-const seen = new WeakSet<Element>();
+/**
+ * One scroll engine for every effect on the site.
+ *
+ * It ticks off Lenis's own scroll emission, so reveals and parallax land on the
+ * same frame as the smoothed scroll position instead of chasing it. Native
+ * scroll/resize stay wired as a fallback for when Lenis is absent — it is never
+ * constructed under `prefers-reduced-motion`.
+ */
+type Sub = { el: Element; tick: (rect: DOMRect, vh: number) => boolean | void };
 
+const subs = new Set<Sub>();
+let frame = 0;
+let bound = false;
+let detachLenis: (() => void) | null = null;
+
+function flush() {
+  frame = 0;
+  const vh = window.innerHeight || document.documentElement.clientHeight;
+  for (const s of Array.from(subs)) {
+    if (s.tick(s.el.getBoundingClientRect(), vh) === true) subs.delete(s);
+  }
+  if (!subs.size) unbind();
+}
+
+/** Coalesce every source down to one measure per frame. */
+const schedule = () => {
+  if (!frame) frame = requestAnimationFrame(flush);
+};
+
+function bindLenis(attempts = 0) {
+  const lenis = getLenis();
+  if (lenis) {
+    lenis.on('scroll', schedule);
+    detachLenis = () => lenis.off('scroll', schedule);
+    return;
+  }
+  // SmoothScroll builds Lenis in its own effect, which may land after ours.
+  if (bound && attempts < 90) requestAnimationFrame(() => bindLenis(attempts + 1));
+}
+
+function bind() {
+  if (bound) return;
+  bound = true;
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  bindLenis();
+  schedule();
+}
+
+function unbind() {
+  if (!bound) return;
+  bound = false;
+  window.removeEventListener('scroll', schedule);
+  window.removeEventListener('resize', schedule);
+  detachLenis?.();
+  detachLenis = null;
+}
+
+function subscribe(sub: Sub) {
+  subs.add(sub);
+  bind();
+  return () => {
+    subs.delete(sub);
+  };
+}
+
+/** Add `.in` as the element crosses into view, then stop watching it. */
 function observe(el: Element) {
-  if (typeof IntersectionObserver === 'undefined') {
+  if (typeof window === 'undefined') {
     el.classList.add('in');
     return () => {};
   }
-  if (!io) {
-    io = new IntersectionObserver(
-      (entries) => {
-        for (const en of entries) {
-          if (en.isIntersecting) {
-            en.target.classList.add('in');
-            io!.unobserve(en.target);
-            seen.add(en.target);
-          }
-        }
-      },
-      { rootMargin: '0px 0px -9% 0px', threshold: 0.08 }
-    );
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.classList.add('in');
+    return () => {};
   }
-  io.observe(el);
-  return () => io?.unobserve(el);
+  return subscribe({
+    el,
+    tick: (r, vh) => {
+      // 8% up from the fold, or already behind us on a restored scroll position
+      if (r.top < vh * 0.92 || r.bottom <= 0) {
+        el.classList.add('in');
+        return true;
+      }
+    },
+  });
 }
 
 type RevealProps = {
@@ -285,25 +347,15 @@ export function Parallax({
     if (!el) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    let ticking = false;
-    const upd = () => {
-      const r = el.getBoundingClientRect();
-      const vh = innerHeight;
-      if (r.bottom > -200 && r.top < vh + 200) {
+    // Continuous: never returns true, so it stays subscribed for the page's life.
+    return subscribe({
+      el,
+      tick: (r, vh) => {
+        if (r.bottom < -200 || r.top > vh + 200) return;
         const prog = (r.top + r.height / 2 - vh / 2) / vh;
         el.style.transform = `translate3d(0,${-prog * amount}%,0)`;
-      }
-      ticking = false;
-    };
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(upd);
-      }
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    upd();
-    return () => window.removeEventListener('scroll', onScroll);
+      },
+    });
   }, [amount]);
 
   return (

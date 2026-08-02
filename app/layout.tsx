@@ -1,18 +1,18 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { Cursor, Header, ThemeScript } from '@/components/Chrome';
+import { Cursor, Header, PreloadScript, SessionMark, ThemeScript } from '@/components/Chrome';
 import SmoothScroll from '@/components/SmoothScroll';
 import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — ${site.role}`,
-    template: `%s — ${site.name}`,
+    default: `${site.name} · ${site.role}`,
+    template: `%s · ${site.name}`,
   },
   description: site.description,
   openGraph: {
-    title: `${site.name} — ${site.role}`,
+    title: `${site.name} · ${site.role}`,
     description: site.description,
     url: site.url,
     siteName: site.name,
@@ -36,11 +36,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" data-theme="archive" suppressHydrationWarning>
       <head>
         <ThemeScript />
+        <PreloadScript />
       </head>
       <body>
         <a className="skip" href="#main">
           Skip to content
         </a>
+        <SessionMark />
         <SmoothScroll />
         <div className="grain" aria-hidden="true" />
         <Cursor />

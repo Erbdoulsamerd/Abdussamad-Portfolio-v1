@@ -196,6 +196,9 @@ html.lenis, html.lenis body { height: auto; }
   transition: opacity .6s var(--e-out), visibility .6s;
 }
 .pre[hidden-anim] { opacity: 0; visibility: hidden; }
+/* Set before first paint when this tab has already seen the loader, so a reload
+   inside the same session never flashes it. See PreloadScript in Chrome.tsx. */
+html.preloaded .pre { display: none; }
 .pre-inner { text-align: center; width: min(440px, 76vw); }
 .pre-pct { font-size: .38em; margin-left: .12em; vertical-align: baseline; color: var(--fg-2); }
 .pre-num {
@@ -262,8 +265,12 @@ html.lenis, html.lenis body { height: auto; }
   content: ""; position: absolute; left: 13px; right: 13px; bottom: 3px;
   height: 1px; background: var(--accent);
 }
-.hdr-r { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
-.clock { font-family: var(--f-label); font-size: var(--t-micro); letter-spacing: .1em; color: var(--fg-2); }
+.hdr-r { display: flex; justify-content: flex-end; align-items: center; gap: 14px; }
+.clock {
+  font-family: var(--f-label); font-size: var(--t-micro); letter-spacing: .1em; color: var(--fg-2);
+  white-space: nowrap;
+}
+.clock span { font-variant-numeric: tabular-nums; }
 .clock i { color: var(--accent); font-style: normal; }
 .tgl {
   width: 34px; height: 34px; border: 1px solid var(--rule-2); border-radius: 50%;
@@ -336,10 +343,36 @@ html.lenis, html.lenis body { height: auto; }
 [data-rv][data-d="3"].in { transition-delay: .21s } [data-rv][data-d="4"].in { transition-delay: .28s }
 [data-rv][data-d="5"].in { transition-delay: .35s } [data-rv][data-d="6"].in { transition-delay: .42s }
 
-/* Clip reveal for images */
-.clipr { overflow: hidden; }
-.clipr > img, .clipr > .ph { transform: scale(1.16); transition: transform 1.3s var(--e-out); }
-.clipr.in > img, .clipr.in > .ph { transform: scale(1); }
+/* Clip reveal — the curtain wipes up while the frame settles out of a defocused
+   push-in. Slower than a text reveal on purpose: pictures carry more weight, so
+   they arrive last and land soft rather than snapping into place. */
+.clipr { overflow: hidden; clip-path: inset(100% 0 0 0); transition: clip-path 1.25s var(--e-out); }
+.clipr.in { clip-path: inset(0 0 0 0); }
+/* Descendant, not child: ClipReveal is sometimes wrapped around a <figure>, so
+   `> img` would silently miss the picture inside it.
+   `scale`/`filter` rather than `transform`: hover states own the transform on
+   these images, and composing beats fighting over specificity. */
+.clipr img, .clipr .ph {
+  scale: 1.28;
+  filter: blur(14px) brightness(.66) saturate(.72);
+  transition: scale 1.7s var(--e-out), filter 1.15s var(--e-out);
+}
+.clipr.in img, .clipr.in .ph { scale: 1; filter: var(--img-filter); }
+
+/* Same drama for images that must NOT be clipped — framed prints and gallery
+   figures whose edges are part of the artwork. They lift and pull focus in
+   place instead of arriving behind a curtain. */
+[data-rv].img-in { transform: translateY(44px) scale(.955); }
+[data-rv].img-in.in {
+  transform: none;
+  transition: opacity 1.1s var(--e-out), transform 1.3s var(--e-out);
+}
+[data-rv].img-in > img {
+  scale: 1.12;
+  filter: blur(12px) brightness(.7) saturate(.8);
+  transition: scale 1.6s var(--e-out), filter 1.15s var(--e-out);
+}
+[data-rv].img-in.in > img { scale: 1; filter: var(--img-filter); }
 
 /* Line-mask headline */
 .linemask { display: block; overflow: hidden; padding-bottom: .04em; }
@@ -352,8 +385,40 @@ html.lenis, html.lenis body { height: auto; }
 /* ---------- 12. HERO ---------- */
 .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end;
         padding-top: 132px; padding-bottom: 34px; position: relative; overflow: hidden; }
-.hero-mark { position: relative; z-index: 2; }
-.hero-mark .mega { text-transform: uppercase; }
+.hero-mark {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: flex-start; gap: clamp(4px, 0.8vw, 12px);
+}
+/* No min-width:0 — the wordmark must never shrink below its own letters, so
+   when space runs short the portrait yields instead of the name wrapping. */
+.hero-mark .mega { text-transform: uppercase; flex: 0 1 auto; }
+
+.hero-portrait {
+  position: relative; flex: 0 1 auto; min-width: 0; align-self: center;
+  width: clamp(160px, 19vw, 288px);
+}
+.hero-portrait img { display: block; width: 100%; height: auto; }
+
+/* Draggable portrait. `pan-y` leaves vertical swipes to the page so the image
+   never becomes a spot you can't scroll from, and hands us the sideways ones —
+   see DragPortrait.tsx. Double-tap zoom goes, since a double tap resets. */
+.hero-drag { touch-action: pan-y pinch-zoom; outline: none; }
+.hero-drag img { -webkit-user-drag: none; user-select: none; pointer-events: none; }
+.hero-drag.is-resetting { transition: translate var(--d-slow) var(--e-out); }
+.hero-drag:focus-visible { outline: 1px solid var(--accent); outline-offset: 8px; }
+@media (hover: hover) and (pointer: fine) {
+  .hero-drag { cursor: grab; }
+  .hero-drag.is-dragging { cursor: grabbing; }
+}
+
+@media (max-width: 860px) {
+  .hero-mark { gap: 8px; }
+  .hero-portrait { width: clamp(110px, 24vw, 168px); }
+}
+@media (max-width: 560px) {
+  .hero-mark { flex-direction: column; align-items: flex-start; }
+  .hero-portrait { width: 160px; align-self: flex-end; margin-top: -6px; }
+}
 .hero-sub {
   display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end;
   gap: 26px; margin-top: clamp(26px, 4vw, 48px); padding-top: 20px; border-top: 1px solid var(--rule);
@@ -500,7 +565,9 @@ html.lenis, html.lenis body { height: auto; }
                            transition-duration: .001ms !important; }
   [data-rv] { opacity: 1 !important; transform: none !important; }
   .linemask > i { transform: none !important; }
-  .clipr > img { transform: none !important; }
+  .clipr { clip-path: none !important; }
+  .clipr img, .clipr .ph,
+  [data-rv].img-in > img { scale: none !important; filter: var(--img-filter) !important; }
   .grain { animation: none; }
 }
 
@@ -612,16 +679,6 @@ html.lenis, html.lenis body { height: auto; }
 
 /* ---------- ABOUT ---------- */
 .ab-hero { padding-top: 158px; padding-bottom: clamp(40px,7vw,90px); }
-.ab-doc { display: grid; grid-template-columns: 230px 1fr; gap: clamp(30px,5vw,80px); align-items: start; }
-@media (max-width: 980px) { .ab-doc { grid-template-columns: 1fr; } }
-.ab-nav { position: sticky; top: 104px; }
-@media (max-width: 980px) { .ab-nav { position: static; margin-bottom: 34px; } }
-.ab-nav ol { border-top: 1px solid var(--rule); }
-.ab-nav a { display: block; padding: 10px 0; border-bottom: 1px solid var(--rule);
-            font-family: var(--f-label); font-size: .82rem; font-weight: 500; letter-spacing: 0;
-            color: var(--fg-3); transition: color .3s var(--e-out), padding-left .3s var(--e-out); }
-.ab-nav a:hover { color: var(--fg); padding-left: 7px; }
-.ab-nav a[aria-current="true"] { color: var(--accent); padding-left: 7px; }
 .ab-sec { padding-block: clamp(44px,7vw,96px); border-top: 1px solid var(--rule); }
 .ab-sec:first-child { border-top: 0; padding-top: 0; }
 .ab-sec h2 { margin-bottom: clamp(22px,3vw,40px); }
@@ -648,8 +705,85 @@ html.lenis, html.lenis body { height: auto; }
 .tl li { display: grid; grid-template-columns: 96px 1fr; gap: clamp(16px,3vw,38px);
          padding: clamp(18px,2.6vw,28px) 0; border-bottom: 1px solid var(--rule); }
 @media (max-width: 640px) { .tl li { grid-template-columns: 1fr; gap: 8px; } }
-.ab-plate-img { aspect-ratio: 4/5; overflow: hidden; background: var(--bg-inset); margin: 0; }
-.ab-plate-img img { width: 100%; height: 100%; object-fit: cover; }
+/* Prose left, clipped prints right */
+.ab-split { display: grid; grid-template-columns: 1fr minmax(280px,.8fr);
+            gap: clamp(26px,5vw,72px); align-items: start; }
+@media (max-width: 980px) { .ab-split { grid-template-columns: 1fr; } }
+
+/* Loose stack of prints. The paper frame, clip, rotation and drop shadow are
+   baked into the artwork — CSS only sizes and overlaps them, or they double up.
+   No overflow clipping here either: it would crop the frames off. */
+.collage { display: flex; flex-direction: column; align-items: center; }
+@media (max-width: 980px) { .collage { padding-top: 22px; } }
+.snap { position: relative; margin: 0; }
+.snap img { width: 100%; height: auto; display: block; }
+.snap:nth-child(1) { width: 94%; align-self: flex-end; }
+.snap:nth-child(2) { width: 90%; align-self: flex-start; margin-top: -7%; }
+.snap:nth-child(3) { width: 66%; align-self: flex-end;   margin-top: -6%; }
+
+/* Stand-in for a print with no artwork yet — see snaps[] in about/page.tsx */
+.ph { aspect-ratio: 4/3; display: grid; place-items: center; padding: 14px;
+      background: repeating-linear-gradient(45deg, var(--bg-plate) 0 9px, var(--bg-inset) 9px 18px); }
+.ph span { font-family: var(--f-label); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase;
+           color: var(--fg-2); text-align: center; line-height: 1.5; }
+
+/* Experience ledger */
+.cv { border-top: 1px solid var(--rule); }
+.cv li { display: grid; grid-template-columns: 136px 1fr; gap: clamp(16px,3vw,38px);
+         padding: clamp(20px,2.8vw,30px) 0; border-bottom: 1px solid var(--rule); }
+@media (max-width: 640px) { .cv li { grid-template-columns: 1fr; gap: 8px; } }
+.cv .yr { font-family: var(--f-label); font-size: .72rem; letter-spacing: .1em; color: var(--accent); }
+.cv .org { display: block; font-family: var(--f-body); font-weight: 700;
+           font-size: clamp(1.25rem,2.3vw,1.95rem); line-height: 1.12; letter-spacing: -.025em; }
+.cv .role { display: block; margin-top: 9px; font-family: var(--f-label);
+            font-size: .78rem; color: var(--fg-2); }
+
+/* Collected curiosities — twin columns over a loose archive print */
+.curio { display: grid; grid-template-columns: repeat(2,1fr); gap: clamp(22px,4vw,56px); }
+.curio > p + p { margin-top: 0; }   /* .ab-sec p + p would indent the second column */
+@media (max-width: 780px) {
+  .curio { grid-template-columns: 1fr; }
+  .curio > p + p { margin-top: 1.15em; }
+}
+/* Pinboard of collected prints — the state before CurioStack takes over, and the
+   one that stays put for no-JS and reduced motion. Frames and the handwritten
+   captions are part of the artwork; CSS adds only the scatter. The stage and deck
+   collapse to `display: contents` so the figures grid directly off .cstack. */
+.cstack { display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(16px,2.4vw,32px);
+          margin-top: clamp(36px,6vw,72px); align-items: start; }
+@media (max-width: 900px) { .cstack { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 560px) { .cstack { grid-template-columns: 1fr; } }
+.cstack-stage, .cstack-deck { display: contents; }
+.cstack-card { margin: 0; }
+.cstack-card img { width: 100%; height: auto; display: block; }
+.cstack-card:nth-child(1) { rotate: -1.7deg; }
+.cstack-card:nth-child(2) { rotate:  1.2deg; margin-top: clamp(12px,2.4vw,34px); }
+.cstack-card:nth-child(3) { rotate:  -.7deg; }
+.cstack-card:nth-child(4) { rotate:  1.5deg; }
+.cstack-card:nth-child(5) { rotate: -1.2deg; margin-top: clamp(12px,2.4vw,34px); }
+.cstack-card:nth-child(6) { rotate:   .9deg; }
+@media (hover: hover) {
+  .cstack-card { transition: translate .5s var(--e-out), scale .5s var(--e-out); }
+  .cstack:not(.live) .cstack-card:hover { translate: 0 -6px; scale: 1.025; }
+}
+
+/* Dealt deck. The wrapper is the scroll runway — one screenful to pin, then a
+   segment of scroll per print — and the stage rides it pinned while JS flies each
+   card in from an alternating side. Nothing clips: the frames overhang on purpose. */
+.cstack.live { display: block; height: calc(100svh + var(--n) * 60svh);
+               margin-top: clamp(30px,5vw,60px); }
+.cstack.live .cstack-stage { display: block; position: sticky; top: 0; height: 100svh; }
+.cstack.live .cstack-deck { display: block; position: absolute; inset: 0; }
+.cstack.live .cstack-card {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  width: clamp(260px, 34vw, 520px); rotate: none; margin: 0;
+  opacity: 0; transition: none; will-change: transform, opacity;
+}
+.cstack.live .cstack-card[data-portrait] { width: clamp(190px, 24vw, 370px); }
+@media (max-width: 620px) {
+  .cstack.live .cstack-card { width: min(76vw, 340px); }
+  .cstack.live .cstack-card[data-portrait] { width: min(54vw, 250px); }
+}
 
 /* ---------- WORK LISTING ---------- */
 .work-hero { padding-top: 152px; padding-bottom: clamp(30px,5vw,58px); }

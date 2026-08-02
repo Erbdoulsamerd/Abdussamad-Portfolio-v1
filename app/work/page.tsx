@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Footer from '@/components/Footer';
 import WorkIndex from '@/components/WorkIndex';
 import { LineMask, Reveal } from '@/components/Motion';
 import { projects } from '@/lib/projects';
@@ -6,7 +7,7 @@ import { projects } from '@/lib/projects';
 export const metadata: Metadata = {
   title: 'Work',
   description:
-    'Selected work by Abdussamad Ibrahim — hospitality concepts, brand identities and spatial systems from Northern Nigeria.',
+    'Selected work by Abdussamad Ibrahim: hospitality concepts, brand identities and spatial systems from Northern Nigeria.',
 };
 
 export default function WorkPage() {
@@ -26,7 +27,7 @@ export default function WorkPage() {
           now
           style={{ marginTop: 'clamp(24px,4vw,44px)', paddingTop: 24, borderTop: '1px solid var(--rule)', maxWidth: '52ch' }}
         >
-          Three documented case files, each one a different expression of the same practice — a place, a
+          Three documented case files, each one a different expression of the same practice: a place, a
           product brand, and an institution. Every project connects identity to something you can walk into,
           eat, or stand in front of.
         </Reveal>
@@ -36,6 +37,8 @@ export default function WorkPage() {
         <WorkIndex projects={published} />
 
       </section>
+
+      <Footer lines={['Start the', 'next one<span class="accent">.</span>']} />
     </>
   );
 }

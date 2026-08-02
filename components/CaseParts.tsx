@@ -1,9 +1,16 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent as ReactKeyboardEvent,
+} from 'react';
 import Image from 'next/image';
 import type { Shot, Swatch } from '@/lib/projects';
 import { scrollToTarget } from './SmoothScroll';
+import { Reveal } from './Motion';
 
 /* ── palette swatches, click to copy ─────────────────────────────────── */
 export function Swatches({ palette }: { palette: Swatch[] }) {
@@ -173,14 +180,17 @@ export function Gallery({ shots }: { shots: Shot[] }) {
     <>
       <div className="gal">
         {shots.map((s, i) => (
-          <figure
+          <Reveal
+            as="figure"
             key={s.src + i}
-            className={`${spanClass(s.span)} ${ratioClass(s.ratio)}`}
+            className={`${spanClass(s.span)} ${ratioClass(s.ratio)} img-in`}
+            /* rolling stagger so a row lands as a wave, not a slab */
+            delay={((i % 3) + 1) as 1 | 2 | 3}
             role="button"
             tabIndex={0}
             data-cursor="Expand"
             onClick={() => show(i)}
-            onKeyDown={(e) => {
+            onKeyDown={(e: ReactKeyboardEvent) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 show(i);
@@ -189,7 +199,7 @@ export function Gallery({ shots }: { shots: Shot[] }) {
           >
             <Image src={s.src} alt={s.alt} width={1600} height={1200} sizes="(max-width: 760px) 100vw, 60vw" />
             <figcaption>{s.caption}</figcaption>
-          </figure>
+          </Reveal>
         ))}
       </div>
 

@@ -9,6 +9,10 @@ export const site = {
   url: 'https://abdussamad.design',
   description:
     'Abdussamad Ibrahim (Flint) is a multidisciplinary designer in Nigeria working across identity, culture, objects, spaces and experiences.',
+  /** Header clock. `tz` is an IANA zone; `label` is what reads after the time. */
+  clock: { tz: 'Africa/Lagos', label: 'WAT Abuja, NG.' },
+  /** External CV — opens in a new tab. TODO: replace with the real Drive/Dropbox/Notion link. */
+  cvUrl: 'https://example.com/REPLACE-WITH-CV-LINK',
 } as const;
 
 export const nav = [
@@ -17,12 +21,14 @@ export const nav = [
   { label: 'About', href: '/about' },
 ] as const;
 
-export const social = [
-  { label: 'Instagram', href: '#' },
-  { label: 'Behance', href: '#' },
-  { label: 'LinkedIn', href: '#' },
-  { label: 'Are.na', href: '#' },
-] as const;
+/** `href: '#'` marks a profile that doesn't exist yet — the footer renders it
+    as inert text rather than a link that jumps the page to the top. */
+export const social: readonly { label: string; href: string }[] = [
+  { label: 'Instagram', href: 'https://www.instagram.com/theamazingabdulll/' },
+  { label: 'Behance', href: 'https://www.behance.net/abdussaibrahim' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/abdussamad-ibrahim-928b9316a/' },
+  { label: 'Are.na', href: 'https://www.are.na/abdussamad-ibrahim/channels' },
+];
 
 export const disciplines = [
   'Creative Systems Design',

@@ -32,8 +32,69 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-label={theme === 'paper' ? 'Switch to dark archive' : 'Switch to paper'}
     >
-      <span aria-hidden="true">{theme === 'paper' ? '☾' : '☀'}</span>
+      {theme === 'paper' ? <MoonIcon /> : <SunIcon />}
     </button>
+  );
+}
+
+function SunIcon() {
+  return (
+    <svg
+      width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="3.9" />
+      <path d="M12 2.2v2.4M12 19.4v2.4M4.5 4.5l1.7 1.7M17.8 17.8l1.7 1.7M2.2 12h2.4M19.4 12h2.4M4.5 19.5l1.7-1.7M17.8 6.2l1.7-1.7" />
+    </svg>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <svg
+      width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
+    >
+      <path d="M20.5 14.2A8.6 8.6 0 1 1 9.8 3.5a6.7 6.7 0 0 0 10.7 10.7Z" />
+    </svg>
+  );
+}
+
+/* ── local clock ─────────────────────────────────────────────────────── */
+export function Clock() {
+  const [time, setTime] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat('en-GB', {
+      timeZone: site.clock.tz,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    });
+    const tick = () => setTime(fmt.format(new Date()));
+    tick();
+
+    // Align to the next whole second, then tick on the second, so the display
+    // never visibly skips or repeats a value the way a naive setInterval drifts.
+    let id = 0;
+    const align = window.setTimeout(() => {
+      tick();
+      id = window.setInterval(tick, 1000);
+    }, 1000 - (Date.now() % 1000));
+
+    return () => {
+      clearTimeout(align);
+      clearInterval(id);
+    };
+  }, []);
+
+  return (
+    <div className="clock">
+      {/* Placeholder keeps server and first client render identical (no
+          hydration mismatch) and reserves the width so nothing shifts. */}
+      <span>{time ?? '--:--:--'}</span> {site.clock.label}
+    </div>
   );
 }
 
@@ -91,6 +152,7 @@ export function Header() {
         </nav>
 
         <div className="hdr-r">
+          <Clock />
           <ThemeToggle />
           <button
             className={`burger${open ? ' on' : ''}`}
@@ -116,12 +178,70 @@ export function Header() {
 }
 
 /* ── preloader ───────────────────────────────────────────────────────── */
+const PRELOAD_KEY = 'ai-preloaded';
+
+/**
+ * True once any page of the site has mounted in this tab. Module scope, so it
+ * survives client-side navigation and resets on a real page load — which is
+ * exactly the difference between "clicked back to the index" and "opened the
+ * site fresh". sessionStorage covers the reload case; this covers the flash,
+ * since it is readable during render.
+ */
+let seenThisTab = false;
+
+/**
+ * Marks the tab as having seen the site. Rendered by the layout, so it runs on
+ * every page — land on /about first and the index still skips its loader later.
+ *
+ * Deferred by a tick on purpose: this sits above <main> in the layout, so its
+ * effect fires before the page's own, and marking the tab synchronously would
+ * tell the loader on a cold load of / that it had already run.
+ */
+export function SessionMark() {
+  useEffect(() => {
+    const id = setTimeout(() => {
+      seenThisTab = true;
+      try {
+        sessionStorage.setItem(PRELOAD_KEY, '1');
+      } catch {}
+    }, 0);
+    return () => clearTimeout(id);
+  }, []);
+  return null;
+}
+
+/** Hides the preloader before first paint when this tab has already seen it. */
+export function PreloadScript() {
+  const js = `(function(){try{if(sessionStorage.getItem('${PRELOAD_KEY}'))document.documentElement.classList.add('preloaded')}catch(e){}})()`;
+  return <script dangerouslySetInnerHTML={{ __html: js }} />;
+}
+
 export function Preloader() {
   const [n, setN] = useState(0);
   const [done, setDone] = useState(false);
   const [gone, setGone] = useState(false);
+  const started = useRef(false);
+  // Decided once, on this instance's first render: reading the live flag on every
+  // render would yank the overlay away mid-count the moment SessionMark sets it.
+  const [skip] = useState(() => seenThisTab);
 
   useEffect(() => {
+    // Once per tab. A reload keeps the session (storage), a click back to the
+    // index keeps the module flag; only closing the tab starts over.
+    // The ref guards the strict-mode remount: on the second pass SessionMark has
+    // already written the flag, and without it the loader would cut itself short.
+    if (!started.current) {
+      let seen = skip;
+      try {
+        seen = seen || sessionStorage.getItem(PRELOAD_KEY) === '1';
+      } catch {}
+      if (seen) {
+        setGone(true);
+        return;
+      }
+      started.current = true;
+    }
+
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const dur = reduce ? 220 : 1100;
     let raf = 0;
@@ -160,9 +280,12 @@ export function Preloader() {
       clearTimeout(watchdog);
       document.body.classList.remove('noscroll');
     };
-  }, []);
+  }, [skip]);
 
-  if (gone) return null;
+  // Navigating back to the index inside the same visit: nothing to load, so
+  // there is no overlay to paint at all — not even for the frame before the
+  // effect runs. On a reload the markup ships but CSS has already hidden it.
+  if (gone || skip) return null;
 
   return (
     <div className="pre" role="status" aria-label="Loading" {...(done ? { 'hidden-anim': '' } : {})}>

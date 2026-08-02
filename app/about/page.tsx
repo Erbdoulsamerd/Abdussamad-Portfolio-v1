@@ -1,27 +1,113 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/Footer';
+import CurioStack from '@/components/CurioStack';
 import { ScrollProgress } from '@/components/Chrome';
-import { ChapterNav } from '@/components/CaseParts';
-import { ClipReveal, LineMask, Reveal } from '@/components/Motion';
-import { disciplines, philosophy, site } from '@/lib/site';
-import { projects } from '@/lib/projects';
+import { LineMask, Reveal } from '@/components/Motion';
+import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Abdussamad Ibrahim, also known as Flint — a multidisciplinary designer in Nigeria whose practice exists at the intersection of identity, culture, objects, spaces and experiences.',
+    'Abdussamad Ibrahim, also known as Flint, is a multidisciplinary designer in Nigeria whose practice exists at the intersection of identity, culture, objects, spaces and experiences.',
 };
 
-const chapters = [
-  { id: 'who', label: 'Who I Am' },
-  { id: 'philosophy', label: 'Philosophy' },
-  { id: 'practice', label: 'My Practice' },
-  { id: 'drives', label: 'What Drives Me' },
-  { id: 'areas', label: 'Areas of Practice' },
-  { id: 'forward', label: 'Looking Forward' },
+const experience = [
+  { years: '2021', org: 'OSCA, Kano', role: 'Lead Graphic Designer (Volunteer)' },
+  { years: '2022 – Present', org: 'Flint Horizon', role: 'Creative Fashion Director' },
+  {
+    years: '2022 – 2023',
+    org: 'National Information Technology Development Agency (ONDI)',
+    role: 'Intern (Head of Communication)',
+  },
+  { years: '2024 – 2025', org: 'Ananse Collective', role: 'Junior Graphic Designer' },
 ];
+
+type Print = { src?: string; alt: string; label: string; w: number; h: number };
+
+/**
+ * The prints carry their own paper frame, clip, tilt and shadow, so they are
+ * placed as-is — no cropping wrapper, no CSS frame. Omit `src` to fall back to
+ * a labelled placeholder.
+ */
+const snaps: Print[] = [
+  {
+    src: '/assets/img/about/ramp.webp',
+    alt: 'Cutting plywood for a skate ramp while a young helper steadies the sheet',
+    label: 'Workshop · building the ramp',
+    w: 869,
+    h: 661,
+  },
+  {
+    src: '/assets/img/about/photography.webp',
+    alt: 'Two visitors photographing painted canvases hung on a gallery wall',
+    label: 'Exhibition · work on the wall',
+    w: 863,
+    h: 601,
+  },
+  {
+    src: '/assets/img/about/config.webp',
+    alt: 'Flatlay of a Config lanyard badge, cap, watch and printed tee',
+    label: 'Flatlay · studio objects',
+    w: 566,
+    h: 662,
+  },
+];
+
+const curios: Print[] = [
+  {
+    src: '/assets/img/curio/wayback.webp',
+    alt: 'A childhood photograph of three children standing together, faces blurred',
+    label: 'Way back',
+    w: 1600,
+    h: 1159,
+  },
+  {
+    src: '/assets/img/curio/tea.webp',
+    alt: 'A metal teapot and a cup of tea on an engraved serving tray',
+    label: 'Taburin mai shayi',
+    w: 1163,
+    h: 1600,
+  },
+  {
+    src: '/assets/img/curio/f1.webp',
+    alt: 'A die-cast Mercedes Formula One car beside a row of toy cars',
+    label: 'Fleet',
+    w: 1600,
+    h: 1159,
+  },
+  {
+    src: '/assets/img/curio/config-25.webp',
+    alt: 'Two organisers laughing together at the Config watch party in Kano',
+    label: 'Config ’25',
+    w: 1600,
+    h: 1159,
+  },
+  {
+    src: '/assets/img/curio/matcha.webp',
+    alt: 'A hand holding an iced matcha drink inside a car',
+    label: 'Matcha',
+    w: 1163,
+    h: 1600,
+  },
+  {
+    src: '/assets/img/curio/config-team.webp',
+    alt: 'The Config Kano watch party team photographed together',
+    label: 'Config team',
+    w: 1600,
+    h: 1159,
+  },
+];
+
+function Print({ src, alt, label, w, h, sizes }: Print & { sizes: string }) {
+  return src ? (
+    <Image src={src} alt={alt} width={w} height={h} sizes={sizes} />
+  ) : (
+    <div className="ph" role="img" aria-label={alt}>
+      <span>{label}</span>
+    </div>
+  );
+}
 
 export default function About() {
   return (
@@ -42,36 +128,19 @@ export default function About() {
           }}
         >
           <Reveal as="p" className="lead" delay={1} now>
-            I am {site.name}, also known as <span className="accent">{site.alias}</span> — a multidisciplinary
+            I am {site.name}, also known as <span className="accent">{site.alias}</span>, a multidisciplinary
             designer based in Nigeria whose practice exists at the intersection of identity, culture, objects,
             spaces, and experiences.
           </Reveal>
         </div>
       </section>
 
-      <ChapterNav items={chapters} />
-
       {/* ── DOCUMENT ─────────────────────────────────────────── */}
       <div className="wrap" style={{ paddingBottom: 'var(--pad-y)', paddingTop: 'clamp(40px,6vw,80px)' }}>
-        <div className="ab-doc">
-          <nav className="ab-nav" aria-label="Sections">
-            <p className="mono" style={{ marginBottom: 12, color: 'var(--fg-3)' }}>
-              Contents
-            </p>
-            <ol>
-              {chapters.map((c) => (
-                <li key={c.id}>
-                  <a href={`#${c.id}`}>
-                    <span>{c.label}</span>
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
-
-          <div>
-            {/* 01 */}
-            <section className="ab-sec" id="who">
+        {/* 01 */}
+        <section className="ab-sec" id="who">
+          <div className="ab-split">
+            <div>
               <h2 className="lg">
                 <LineMask lines={['I began in brand', 'identity. I did not', 'stay there.']} />
               </h2>
@@ -91,190 +160,80 @@ export default function About() {
                   solving a problem.
                 </p>
               </Reveal>
-            </section>
+            </div>
 
-            {/* 02 */}
-            <section className="ab-sec" id="philosophy">
-              <h2 className="lg">
-                <LineMask lines={['The strongest ideas', 'are not confined', 'to one discipline.']} />
-              </h2>
-
-              <Reveal as="ul" className="phil">
-                {philosophy.map((p) => (
-                  <li key={p.key}>
-                    <span>
-                      {p.lead} {p.emph}
-                    </span>
-                  </li>
-                ))}
-              </Reveal>
-
-              <Reveal as="p" className="body-2" delay={1} style={{ marginTop: 28 }}>
-                Rather than creating isolated deliverables, I design systems that connect people, places,
-                ideas, and experiences. Every project starts with curiosity and ends with one question:
-              </Reveal>
-              <Reveal
-                as="p"
-                className="lg accent serif-it"
-                delay={2}
-                style={{ marginTop: 22, fontWeight: 400 }}
-              >
-                How can this become more meaningful?
-              </Reveal>
-            </section>
-
-            {/* 03 */}
-            <section className="ab-sec" id="practice">
-              <h2 className="lg">
-                <LineMask lines={['Fluid between', 'digital and physical.']} />
-              </h2>
-              <Reveal as="p" className="body-2">
-                I have designed brand identities for businesses, startups, and cultural organizations. I have
-                built physical structures like a skateboard ramp to support a growing skateboarding community.
-                I have developed hospitality concepts where branding, architecture, interiors, and storytelling
-                become one experience. Through photography, I document people, places, and ideas with the same
-                intentionality that I bring to design.
-              </Reveal>
-
-              <Reveal as="ul" className="tl" delay={1} style={{ marginTop: 34 }}>
-                {projects.map((p) => (
-                  <li key={p.slug}>
-                    <span className="mono accent">{p.title}</span>
-                    <span>
-                      <span className="md">{p.strap}.</span>
-                      <span className="mono" style={{ display: 'block', marginTop: 8 }}>
-                        <Link className="ulink" href={`/work/${p.slug}`}>
-                          Read the case study
-                        </Link>
-                      </span>
-                    </span>
-                  </li>
-                ))}
-                <li>
-                  <span className="mono">SkateMania</span>
-                  <span>
-                    <span className="md">A skateboard ramp, built by hand, for a community that needed one.</span>
-                  </span>
-                </li>
-                <li>
-                  <span className="mono">The Backyard</span>
-                  <span>
-                    <span className="md">A space designed to be gathered in, not just looked at.</span>
-                  </span>
-                </li>
-                <li>
-                  <span className="mono">Flint</span>
-                  <span>
-                    <span className="md">The studio name, and the through-line across every discipline.</span>
-                  </span>
-                </li>
-              </Reveal>
-
-              <Reveal as="p" className="body-2" delay={2} style={{ marginTop: 30 }}>
-                These all represent different expressions of a single practice — designing experiences that
-                people can participate in rather than simply observe.
-              </Reveal>
-            </section>
-
-            {/* 04 */}
-            <section className="ab-sec" id="drives">
-              <h2 className="lg">
-                <LineMask lines={['The relationship', 'between design', 'and culture.']} />
-              </h2>
-              <Reveal as="p" className="body-2">
-                I enjoy understanding how people move, gather, communicate, remember, and create meaning.
-                Whether I am developing a visual identity, directing a photoshoot, prototyping an object, or
-                imagining a new public space, my goal remains the same: to create work that feels intentional,
-                useful, and lasting.
-              </Reveal>
-
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit,minmax(min(280px,100%),1fr))',
-                  gap: 'var(--gut)',
-                  marginTop: 32,
-                  alignItems: 'center',
-                }}
-              >
-                <Reveal as="p" className="body-2" delay={1}>
-                  Growing up in {site.region} has significantly influenced my perspective. It has inspired me
-                  to explore local stories, architecture, youth culture, craftsmanship, and community through a
-                  contemporary design lens.
+            {/* Dealt one at a time rather than as a block, so the pile builds. */}
+            <div className="collage">
+              {snaps.map((s, i) => (
+                <Reveal
+                  as="figure"
+                  className="snap img-in"
+                  delay={(i + 1) as 1 | 2 | 3}
+                  key={s.label}
+                >
+                  <Print {...s} sizes="(max-width: 980px) 88vw, 34vw" />
                 </Reveal>
-                <ClipReveal className="ab-plate-img">
-                  <Image
-                    src="/assets/img/gk/ext-01.jpg"
-                    alt="Earthen architecture with arched openings and palms — Gidan Kasa"
-                    width={1200}
-                    height={1500}
-                    sizes="(max-width: 900px) 100vw, 40vw"
-                  />
-                </ClipReveal>
-              </div>
-            </section>
-
-            {/* 05 */}
-            <section className="ab-sec" id="areas">
-              <h2 className="lg" style={{ marginBottom: 30 }}>
-                <LineMask lines={['Eleven tools,', 'one intent.']} />
-              </h2>
-              <Reveal as="ul" className="prac">
-                {disciplines.map((d) => (
-                  <li key={d}>
-                    <button type="button">
-                      <span className="t">{d}</span>
-                    </button>
-                  </li>
-                ))}
-              </Reveal>
-            </section>
-
-            {/* 06 */}
-            <section className="ab-sec" id="forward">
-              <h2 className="lg">
-                <LineMask lines={['Blurring the', 'boundaries.']} />
-              </h2>
-              <Reveal as="p" className="body-2">
-                My ambition is to continue building projects that blur the boundaries between disciplines.
-              </Reveal>
-
-              <Reveal
-                as="ul"
-                delay={1}
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit,minmax(min(210px,100%),1fr))',
-                  gap: 1,
-                  background: 'var(--rule)',
-                  border: '1px solid var(--rule)',
-                  marginTop: 28,
-                }}
-              >
-                {[
-                  ['Brands', 'that become communities'],
-                  ['Spaces', 'that become destinations'],
-                  ['Products', 'that become rituals'],
-                  ['Ideas', 'that leave cultural impact'],
-                ].map(([k, v]) => (
-                  <li key={k} style={{ background: 'var(--bg)', padding: 'clamp(20px,2.6vw,28px)' }}>
-                    <span className="mono accent">{k}</span>
-                    <span className="md" style={{ display: 'block', marginTop: 12 }}>
-                      {v}
-                    </span>
-                  </li>
-                ))}
-              </Reveal>
-
-              <Reveal className="pull" delay={2} style={{ marginTop: 44 }}>
-                <p>
-                  I don&rsquo;t believe great design lives in one category. I believe it lives in the
-                  connections between them.
-                </p>
-              </Reveal>
-            </section>
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
+
+        {/* 02 */}
+        <section className="ab-sec" id="practice">
+          <h2 className="lg">
+            <LineMask lines={['Fluid between', 'digital and physical.']} />
+          </h2>
+          <Reveal as="p" className="body-2">
+            I have designed brand identities for businesses, startups, and cultural organizations. I have built
+            physical structures like a skateboard ramp to support a growing skateboarding community. I have
+            developed hospitality concepts where branding, architecture, interiors, and storytelling become one
+            experience. Through photography, I document people, places, and ideas with the same intentionality
+            that I bring to design.
+          </Reveal>
+
+          <Reveal as="ul" className="cv" delay={1} style={{ marginTop: 34 }}>
+            {experience.map((e) => (
+              <li key={`${e.years}-${e.org}`}>
+                <span className="yr">{e.years}</span>
+                <span>
+                  <span className="org">{e.org}</span>
+                  <span className="role">{e.role}</span>
+                </span>
+              </li>
+            ))}
+          </Reveal>
+
+          <Reveal as="p" className="body-2" delay={2} style={{ marginTop: 30 }}>
+            These all represent different expressions of a single practice: designing experiences that people
+            can participate in rather than simply observe.
+          </Reveal>
+        </section>
+
+        {/* 03 */}
+        <section className="ab-sec" id="curiosities">
+          <h2 className="lg">
+            <LineMask lines={['Collected', 'curiosities']} />
+          </h2>
+
+          <Reveal className="curio">
+            <p className="body-2">
+              I collect more than references, I collect moments, objects, and experiences. Whether it&rsquo;s
+              the engineering behind a Formula One car, the optimism of Spider-Man, the quiet ritual of making
+              tea, or the craftsmanship woven into traditional Northern Nigerian textiles, each one teaches me
+              something about people. They remind me that great design isn&rsquo;t created in isolation;
+              it&rsquo;s shaped by the world around us.
+            </p>
+            <p className="body-2">
+              These interests constantly find their way into my work. Sometimes they influence a brand identity,
+              other times they become the foundation for a space, a product, a photograph, or a community
+              initiative. They aren&rsquo;t distractions from my practice, they&rsquo;re the reason it continues
+              to evolve.
+            </p>
+          </Reveal>
+
+          <CurioStack items={curios} />
+        </section>
+
       </div>
 
       <Footer lines={['Work with', 'me<span class="accent">.</span>']} />

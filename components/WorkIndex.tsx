@@ -7,26 +7,14 @@ import type { Project } from '@/lib/projects';
 
 type View = 'columns' | 'list' | 'grid';
 const VIEWS: View[] = ['columns', 'list', 'grid'];
-const KEY = 'ai-idxview';
 
 export default function WorkIndex({ projects }: { projects: Project[] }) {
-  const [view, setView] = useState<View>('list');
+  // Columns every visit. The toggle still switches views for the session, but
+  // the choice is deliberately not remembered — the index always opens the same
+  // way, for everyone.
+  const [view, setView] = useState<View>('columns');
   const [preview, setPreview] = useState<string | null>(null);
   const floatRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(KEY) as View | null;
-      if (saved && VIEWS.includes(saved)) setView(saved);
-    } catch {}
-  }, []);
-
-  const pick = (v: View) => {
-    setView(v);
-    try {
-      localStorage.setItem(KEY, v);
-    } catch {}
-  };
 
   /* floating hover preview, list view only */
   useEffect(() => {
@@ -65,7 +53,7 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
               key={v}
               role="tab"
               aria-selected={view === v}
-              onClick={() => pick(v)}
+              onClick={() => setView(v)}
             >
               {v}
             </button>

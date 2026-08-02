@@ -1,10 +1,12 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import WorkIndex from '@/components/WorkIndex';
+import DragPortrait from '@/components/DragPortrait';
 import Footer from '@/components/Footer';
 import { Preloader } from '@/components/Chrome';
 import { LineMask, Magnetic, Reveal, Scramble } from '@/components/Motion';
 import { projects } from '@/lib/projects';
-import { disciplines, philosophy } from '@/lib/site';
+import { disciplines, site } from '@/lib/site';
 
 export default function Home() {
   const published = projects.filter((p) => p.published);
@@ -31,6 +33,20 @@ export default function Home() {
               ]}
             />
           </h1>
+
+          <Reveal className="hero-portrait" delay={2} now>
+            <DragPortrait>
+              <Image
+                src="/assets/img/me.png"
+                alt={`Halftone portrait of ${site.name}`}
+                width={877}
+                height={1034}
+                priority
+                draggable={false}
+                sizes="(max-width: 860px) 40vw, 288px"
+              />
+            </DragPortrait>
+          </Reveal>
         </div>
 
         <div className="hero-sub">
@@ -41,8 +57,13 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={3} now style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
-            <Magnetic className="btn solid" href="#work">
-              <span>Open the index</span>
+            <Magnetic
+              className="btn solid"
+              href={site.cvUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Download CV</span>
             </Magnetic>
             <Link className="btn" href="/about">
               <span>About the practice</span>
@@ -71,40 +92,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── STATEMENT ────────────────────────────────────────── */}
-      <section className="sec wrap">
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit,minmax(min(330px,100%),1fr))',
-            gap: 'var(--gut)',
-          }}
-        >
-          <div>
-            <h2 className="lg" style={{ marginBottom: 26 }}>
-              <LineMask lines={['The strongest ideas', 'are not confined', 'to one discipline.']} />
-            </h2>
-          </div>
-
-          <div>
-            <ul style={{ borderTop: '1px solid var(--rule)' }}>
-              {philosophy.map((p, i) => (
-                <Reveal
-                  as="li"
-                  key={p.key}
-                  delay={(i + 1) as 1 | 2 | 3 | 4 | 5}
-                  style={{ padding: '16px 0', borderBottom: '1px solid var(--rule)' }}
-                >
-                  <span className="md">
-                    {p.lead} <span className="serif-it">{p.emph}</span>
-                  </span>
-                </Reveal>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
       {/* ── WORK INDEX ───────────────────────────────────────── */}
       <section className="sec wrap rule-t" id="work">
 
@@ -127,7 +114,7 @@ export default function Home() {
             </h2>
             <Reveal as="p" className="body-2">
               Design is not defined by the medium. The medium simply becomes the most appropriate tool for
-              solving a problem. Below is the current toolkit — each one has been used in service of the same
+              solving a problem. Below is the current toolkit. Each one has been used in service of the same
               idea.
             </Reveal>
           </div>
