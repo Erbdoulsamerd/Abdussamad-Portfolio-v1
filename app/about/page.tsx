@@ -184,11 +184,11 @@ export default function About() {
             <LineMask lines={['Fluid between', 'digital and physical.']} />
           </h2>
           <Reveal as="p" className="body-2">
-            I have designed brand identities for businesses, startups, and cultural organizations. I have built
+            I have designed brand identities for businesses, startups, and cultural organisations. I have built
             physical structures like a skateboard ramp to support a growing skateboarding community. I have
             developed hospitality concepts where branding, architecture, interiors, and storytelling become one
             experience. Through photography, I document people, places, and ideas with the same intentionality
-            that I bring to design.
+            that I bring to design. The rooms it happened in have been just as mixed.
           </Reveal>
 
           <Reveal as="ul" className="cv" delay={1} style={{ marginTop: 34 }}>
@@ -204,8 +204,8 @@ export default function About() {
           </Reveal>
 
           <Reveal as="p" className="body-2" delay={2} style={{ marginTop: 30 }}>
-            These all represent different expressions of a single practice: designing experiences that people
-            can participate in rather than simply observe.
+            Different rooms, different titles, one practice: designing experiences that people can
+            participate in rather than simply observe.
           </Reveal>
         </section>
 

@@ -55,7 +55,7 @@ export const projects: Project[] = [
     slug: 'gidan-kasa',
     index: '01',
     title: 'Gidan Kasa',
-    strap: 'House of earth',
+    strap: 'Mud house',
     year: '2024',
     place: 'Kaduna',
     tags: ['Hospitality', 'Spatial', 'Identity'],
@@ -64,7 +64,7 @@ export const projects: Project[] = [
     hero: GK('court-01'),
     heroAlt: 'Gidan Kasa: earthen courtyard with pool, arched openings and palms',
     lede:
-      'Hausa for “house of earth.” A hospitality concept where the ground the building stands on became the material, the palette and the name.',
+      'Hausa for “mud house.” A hospitality concept where the ground the building stands on became the material, the palette and the name.',
     accent: '#E08A2E',
     accentFg: '#1A1206',
     meta: [
@@ -94,7 +94,7 @@ export const projects: Project[] = [
       {
         id: 'name',
         eyebrow: 'Name & Mark',
-        heading: ['Gidan Kasa,', 'house of earth.'],
+        heading: ['Gidan Kasa,', 'mud house.'],
         body: [
           'The name is Hausa, and it is literal. Gida is house. Kasa is the ground, the earth, the land itself. Naming the place after its own material means the brand can never drift away from the building. It is a promise the walls keep on their own.',
           'The mark is written, not typeset. A single continuous line, drawn with the same looseness as a finger dragged through wet plaster, so the logotype reads as a gesture belonging to the surface rather than a label applied on top of it.',

@@ -5,14 +5,16 @@ export const site = {
   base: 'Kaduna, Nigeria',
   region: 'Northern Nigeria',
   since: '2019',
-  email: 'hello@abdussamad.design',
+  email: 'abdusibrahim@gmail.com',
   url: 'https://abdussamad.design',
   description:
     'Abdussamad Ibrahim (Flint) is a multidisciplinary designer in Nigeria working across identity, culture, objects, spaces and experiences.',
   /** Header clock. `tz` is an IANA zone; `label` is what reads after the time. */
   clock: { tz: 'Africa/Lagos', label: 'WAT Abuja, NG.' },
-  /** External CV — opens in a new tab. TODO: replace with the real Drive/Dropbox/Notion link. */
-  cvUrl: 'https://example.com/REPLACE-WITH-CV-LINK',
+  /** External CV — opens in a new tab. Drive preview rather than a forced
+      download: it survives Drive's virus-scan interstitial and lets people read
+      it without committing to a file. */
+  cvUrl: 'https://drive.google.com/file/d/1uZC4pG1p4Q0-fh3fzxXcSkVojvbjIfe6/view',
 } as const;
 
 export const nav = [
