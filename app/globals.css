@@ -72,6 +72,13 @@
   --d-slow: .9s;
 }
 
+/* Phones get a steeper display step. At 12vw the wordmark stops around 60% of
+   the measure and the hero reads half empty. 18vw runs it to the gutter and
+   still leaves the longest authored line, "the practice", on one row at 320px. */
+@media (max-width: 640px) {
+  :root { --t-mega: clamp(3.4rem, 18vw, 7rem); }
+}
+
 /* Semantic — LIGHT ("paper") */
 [data-theme="paper"] {
   --bg:         var(--c-paper);
@@ -250,9 +257,17 @@ html.preloaded .pre { display: none; }
   padding-block: 12px;
 }
 .hdr.hide { transform: translateY(-104%); }
-.brand { line-height: 1.25; }
-.brand b { font-weight: 700; letter-spacing: -.01em; font-size: .92rem; display: block; }
+/* Links to the work index. `justify-self` matters: as a stretched grid item the
+   anchor would span the whole 1fr column and turn dead header space into a
+   click that navigates. */
+.brand { line-height: 1.25; justify-self: start; position: relative; }
+.brand b { font-weight: 700; letter-spacing: -.01em; font-size: .92rem; display: block;
+           transition: color var(--d-fast) var(--e-out); }
 .brand span { display: block; }
+.brand:hover b { color: var(--accent); }
+/* Two short lines sit well under the 44px touch minimum. Grow the hit area with
+   a pseudo rather than padding, so the header grid does not shift. */
+.brand::after { content: ""; position: absolute; inset: -8px -6px; }
 .nav { display: flex; gap: 4px; }
 .nav a {
   font-family: var(--f-label); font-size: .82rem; font-weight: 500; letter-spacing: 0;
@@ -417,7 +432,7 @@ html.preloaded .pre { display: none; }
 }
 @media (max-width: 560px) {
   .hero-mark { flex-direction: column; align-items: flex-start; }
-  .hero-portrait { width: 160px; align-self: flex-end; margin-top: -6px; }
+  .hero-portrait { width: min(46vw, 200px); align-self: flex-end; margin-top: -6px; }
 }
 .hero-sub {
   display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end;
@@ -426,7 +441,9 @@ html.preloaded .pre { display: none; }
 .hero-sub > * { min-width: 0; }
 @media (max-width: 640px) {
   .hero-sub { display: grid; }
-  .hero { padding-top: 108px; }
+  /* Centred rather than bottom-anchored: the phone stack is short enough that
+     flex-end parked the whole hero under a dead third of empty canvas. */
+  .hero { padding-top: 96px; justify-content: center; }
 }
 .hero-bg {
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
@@ -525,11 +542,16 @@ html.preloaded .pre { display: none; }
 .ftr-cta { display: block; }
 .ftr-cta .mega { text-transform: uppercase; transition: color var(--d-base) var(--e-out); }
 .ftr-cta:hover .mega { color: var(--accent); }
-.ftr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px,100%),1fr)); gap: var(--gut);
-            margin-top: clamp(44px,6vw,86px); padding-top: 26px; border-top: 1px solid var(--rule); }
-.ftr-col h4 { font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 14px; font-weight: 500; }
-.ftr-col li + li { margin-top: 7px; }
-.ftr-btm { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-top: clamp(44px,6vw,80px); }
+/* One rule, one line: copyright at one end, the profiles at the other. On a phone
+   the row wraps and the links sit under the copyright rather than squeezing.
+   Type is declared here and inherited by both, so the two halves of the line can
+   never drift out of step; only colour tells metadata from something clickable. */
+.ftr-btm { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;
+           gap: 14px clamp(20px,3vw,36px); margin-top: clamp(44px,6vw,86px);
+           padding-top: 26px; border-top: 1px solid var(--rule);
+           font-family: var(--f-label); font-size: .75rem; font-weight: 500;
+           letter-spacing: .01em; line-height: 1.4; }
+.ftr-social { display: flex; flex-wrap: wrap; gap: clamp(16px,2.6vw,34px); }
 
 /* ---------- 17. LIGHTBOX ---------- */
 .lb { position: fixed; inset: 0; z-index: 9000; background: color-mix(in srgb, var(--bg) 96%, #000);
@@ -679,6 +701,9 @@ html.preloaded .pre { display: none; }
 
 /* ---------- ABOUT ---------- */
 .ab-hero { padding-top: 158px; padding-bottom: clamp(40px,7vw,90px); }
+/* Clear the fixed header, no more. 158px is a third of a phone screen spent on
+   nothing; the front page already drops to 96px here. */
+@media (max-width: 640px) { .ab-hero { padding-top: 96px; } }
 .ab-sec { padding-block: clamp(44px,7vw,96px); border-top: 1px solid var(--rule); }
 .ab-sec:first-child { border-top: 0; padding-top: 0; }
 .ab-sec h2 { margin-bottom: clamp(22px,3vw,40px); }
@@ -746,9 +771,10 @@ html.preloaded .pre { display: none; }
   .curio > p + p { margin-top: 1.15em; }
 }
 /* Pinboard of collected prints — the state before CurioStack takes over, and the
-   one that stays put for no-JS and reduced motion. Frames and the handwritten
-   captions are part of the artwork; CSS adds only the scatter. The stage and deck
-   collapse to `display: contents` so the figures grid directly off .cstack. */
+   one that stays put on phones, for no-JS and under reduced motion. Frames and the
+   handwritten captions are part of the artwork; CSS adds only the scatter. The
+   stage and deck collapse to `display: contents` so the figures grid directly
+   off .cstack. */
 .cstack { display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(16px,2.4vw,32px);
           margin-top: clamp(36px,6vw,72px); align-items: start; }
 @media (max-width: 900px) { .cstack { grid-template-columns: repeat(2,1fr); } }
@@ -767,10 +793,15 @@ html.preloaded .pre { display: none; }
   .cstack:not(.live) .cstack-card:hover { translate: 0 -6px; scale: 1.025; }
 }
 
-/* Dealt deck. The wrapper is the scroll runway — one screenful to pin, then a
-   segment of scroll per print — and the stage rides it pinned while JS flies each
-   card in from an alternating side. Nothing clips: the frames overhang on purpose. */
-.cstack.live { display: block; height: calc(100svh + var(--n) * 60svh);
+/* Dealt deck, wide screens only — CurioStack.tsx adds `live` above 760px and
+   removes it below, so everything under this comment is a desktop treatment and
+   the pinboard above is what a phone gets. The wrapper is the scroll runway —
+   one screenful to pin, then a segment of scroll per print — and the stage rides
+   it pinned while JS flies each card in from an alternating side. Nothing clips:
+   the frames overhang on purpose. Keep the per-print segment short: the prints
+   overlap in flight (see OVERLAP in CurioStack.tsx), so a long segment buys no
+   extra drama, only a section that scrolls like the page has stalled. */
+.cstack.live { display: block; height: calc(100svh + var(--n) * 30svh);
                margin-top: clamp(30px,5vw,60px); }
 .cstack.live .cstack-stage { display: block; position: sticky; top: 0; height: 100svh; }
 .cstack.live .cstack-deck { display: block; position: absolute; inset: 0; }
@@ -782,10 +813,6 @@ html.preloaded .pre { display: none; }
 /* Print one is already on the table, so the stage is never empty on arrival. */
 .cstack.live .cstack-card:first-child { opacity: 1; }
 .cstack.live .cstack-card[data-portrait] { width: clamp(190px, 24vw, 370px); }
-@media (max-width: 620px) {
-  .cstack.live .cstack-card { width: min(76vw, 340px); }
-  .cstack.live .cstack-card[data-portrait] { width: min(54vw, 250px); }
-}
 
 /* ---------- NEXT PROJECT (case-study loop) ---------- */
 .nextp {

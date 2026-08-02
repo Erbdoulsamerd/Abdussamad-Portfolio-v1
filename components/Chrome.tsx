@@ -141,10 +141,12 @@ export function Header() {
   return (
     <>
       <header className={`hdr${stuck ? ' stuck' : ''}${hidden ? ' hide' : ''}`}>
-        <div className="brand">
+        {/* The front page is the work index, so the wordmark goes where Work
+            goes. Same href as nav[0], deliberately: they are the one place. */}
+        <Link className="brand" href="/">
           <b>{site.name}</b>
           <span className="mono">{site.role}</span>
-        </div>
+        </Link>
 
         <nav className="nav" aria-label="Primary">
           {nav.map((n) => (

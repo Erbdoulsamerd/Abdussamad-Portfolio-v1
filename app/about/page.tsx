@@ -236,7 +236,7 @@ export default function About() {
 
       </div>
 
-      <Footer lines={['Work with', 'me<span class="accent">.</span>']} />
+      <Footer />
     </>
   );
 }
