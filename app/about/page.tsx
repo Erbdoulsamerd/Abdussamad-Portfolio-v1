@@ -7,16 +7,9 @@ import { LineMask, Reveal } from '@/components/Motion';
 import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
-  title: 'About Abdussamad Ibrahim',
+  title: 'About',
   description:
-    'About Abdussamad Ibrahim, also known as Flint, a Nigerian creative systems designer working across identity, culture, objects, spaces, photography, and experiences.',
-  keywords: [
-    'Abdussamad Ibrahim',
-    'Flint',
-    'About Abdussamad Ibrahim',
-    'Nigerian designer',
-    'Creative Systems Designer',
-  ],
+    'Abdussamad Ibrahim, also known as Flint, is a multidisciplinary designer in Nigeria whose practice exists at the intersection of identity, culture, objects, spaces and experiences.',
 };
 
 const experience = [

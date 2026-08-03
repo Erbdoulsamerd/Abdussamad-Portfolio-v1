@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import WorkIndex from '@/components/WorkIndex';
@@ -8,12 +7,6 @@ import { Preloader } from '@/components/Chrome';
 import { LineMask, Magnetic, Reveal, Scramble } from '@/components/Motion';
 import { projects } from '@/lib/projects';
 import { disciplines, site } from '@/lib/site';
-
-export const metadata: Metadata = {
-  title: `Abdussamad Ibrahim | ${site.role}`,
-  description: `${site.name} is a Nigerian creative systems designer working across identity, brand strategy, experience design, industrial design, photography, and spatial concepts.`,
-  keywords: [...site.keywords],
-};
 
 export default function Home() {
   const published = projects.filter((p) => p.published);
