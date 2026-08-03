@@ -18,10 +18,26 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const p = getProject(slug);
   if (!p) return {};
+
+  const coverImage = p.cover.startsWith('http') ? p.cover : new URL(p.cover, 'https://abdussamad.design').toString();
+
   return {
     title: `${p.title} · Case Study`,
     description: p.lede,
-    openGraph: { title: `${p.title} · Case Study`, description: p.lede, images: [p.cover] },
+    alternates: { canonical: `https://abdussamad.design/work/${p.slug}` },
+    openGraph: {
+      title: `${p.title} · Case Study`,
+      description: p.lede,
+      url: `https://abdussamad.design/work/${p.slug}`,
+      type: 'article',
+      images: [{ url: coverImage, alt: p.coverAlt }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${p.title} · Case Study`,
+      description: p.lede,
+      images: [{ url: coverImage, alt: p.coverAlt }],
+    },
   };
 }
 
