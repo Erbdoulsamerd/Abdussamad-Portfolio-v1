@@ -4,7 +4,7 @@ import { Cursor, Header, PreloadScript, SessionMark, ThemeScript } from '@/compo
 import SmoothScroll from '@/components/SmoothScroll';
 import { site } from '@/lib/site';
 
-const socialImage = new URL('/ai-og.png', site.url).toString();
+const socialImage = 'https://abdussamad.design/ai-og.png';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -21,6 +21,11 @@ export const metadata: Metadata = {
     siteName: site.name,
     type: 'website',
     images: [{ url: socialImage, width: 1200, height: 630, alt: `${site.name} preview` }],
+  },
+  other: {
+    'og:image:secure_url': socialImage,
+    'og:image:type': 'image/png',
+    'og:image:alt': `${site.name} preview`,
   },
   twitter: {
     card: 'summary_large_image',
