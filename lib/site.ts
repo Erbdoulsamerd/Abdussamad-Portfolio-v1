@@ -8,7 +8,20 @@ export const site = {
   email: 'abdusibrahim@gmail.com',
   url: 'https://abdussamad.space',
   description:
-    'Abdussamad Ibrahim (Flint) is a multidisciplinary designer in Nigeria working across identity, culture, objects, spaces and experiences.',
+    'Abdussamad Ibrahim is a Nigerian creative systems designer and multidisciplinary designer working across identity, brand strategy, experience design, industrial design, photography, and spatial concepts.',
+  keywords: [
+    'Abdussamad Ibrahim',
+    'Abdussamad',
+    'Flint',
+    'Creative Systems Designer',
+    'Nigerian designer',
+    'Brand Identity Designer',
+    'Experience Design',
+    'Industrial Design',
+    'Photography',
+    'Spatial Design',
+    'Portfolio',
+  ],
   /** Header clock. `tz` is an IANA zone; `label` is what reads after the time. */
   clock: { tz: 'Africa/Lagos', label: 'WAT Abuja, NG.' },
   /** External CV — opens in a new tab. Drive preview rather than a forced

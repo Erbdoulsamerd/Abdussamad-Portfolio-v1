@@ -2,20 +2,61 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Cursor, Header, PreloadScript, SessionMark, ThemeScript } from '@/components/Chrome';
 import SmoothScroll from '@/components/SmoothScroll';
-import { site } from '@/lib/site';
+import SoundEffects from '@/components/SoundEffects';
+import { site, social } from '@/lib/site';
 
 const socialImage = new URL('/ai-og.png', site.url).toString();
+const siteTitle = `${site.name} | ${site.role}`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  alternateName: site.alias,
+  jobTitle: site.role,
+  description: site.description,
+  url: site.url,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Kaduna',
+    addressRegion: 'Northern Nigeria',
+    addressCountry: 'NG',
+  },
+  sameAs: social.map((item) => item.href),
+  knowsAbout: [
+    'Brand strategy',
+    'Identity design',
+    'Experience design',
+    'Industrial design',
+    'Photography',
+    'Spatial design',
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} · ${site.role}`,
-    template: `%s · ${site.name}`,
+    default: siteTitle,
+    template: `%s | ${site.name}`,
   },
   description: site.description,
+  keywords: [...site.keywords],
   alternates: { canonical: site.url },
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.name,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
   openGraph: {
-    title: `${site.name} · ${site.role}`,
+    title: siteTitle,
     description: site.description,
     url: site.url,
     siteName: site.name,
@@ -29,7 +70,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${site.name} · ${site.role}`,
+    title: siteTitle,
     description: site.description,
     images: [{ url: socialImage, alt: `${site.name} preview` }],
   },
@@ -51,6 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <ThemeScript />
         <PreloadScript />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </head>
       <body>
         <a className="skip" href="#main">
@@ -58,6 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <SessionMark />
         <SmoothScroll />
+        <SoundEffects />
         <div className="grain" aria-hidden="true" />
         <Cursor />
         <Header />
