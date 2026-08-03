@@ -9,8 +9,8 @@ export const site = {
   url: 'https://abdussamad.space',
   description:
     'Abdussamad Ibrahim (Flint) is a multidisciplinary designer in Nigeria working across identity, culture, objects, spaces and experiences.',
-  /** Header clock. `tz` is an IANA zone; `label` is what reads after the time. */
-  clock: { tz: 'Africa/Lagos', label: 'WAT Abuja, NG.' },
+  /** Header clock. `tz` is an IANA zone; `label` falls back to a plain location name. */
+  clock: { tz: 'Africa/Lagos', label: 'Local' },
   /** External CV — opens in a new tab. Drive preview rather than a forced
       download: it survives Drive's virus-scan interstitial and lets people read
       it without committing to a file. */

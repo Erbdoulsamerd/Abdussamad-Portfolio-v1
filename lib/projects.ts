@@ -177,13 +177,13 @@ export const projects: Project[] = [
     index: '02',
     title: 'Aadil',
     strap: 'The secret ingredient is freshness',
-    year: '2024',
+    year: '2026',
     place: 'F&B',
     tags: ['Brand Identity', 'Packaging', 'Art Direction'],
     cover: AA('cover'),
     coverAlt: 'Aadil logotype set over free-range poultry',
-    hero: AA('18'),
-    heroAlt: 'Free-range hen portrait framed with the Aadil mark',
+    hero: AA('08'),
+    heroAlt: 'Aadil identity board image',
     lede:
       'A free-range chicken brand built on appetite, warmth and a Nigerian sense of humour, from a hand-drawn script to a truck driving through Kaduna.',
     accent: '#F04B23',
@@ -193,7 +193,7 @@ export const projects: Project[] = [
       { label: 'Sector', value: 'Food & beverage' },
       { label: 'Scope', value: 'Identity · Packaging · Art direction' },
       { label: 'Typeface', value: 'Gilroy' },
-      { label: 'Year', value: '2024' },
+      { label: 'Year', value: '2026' },
     ],
     sections: [
       {
@@ -260,7 +260,7 @@ export const projects: Project[] = [
     index: '03',
     title: 'Enlira',
     strap: 'Great impact is never built alone',
-    year: '2025',
+    year: '2026',
     place: 'Impact',
     tags: ['Brand Identity', 'Stationery', 'Environmental'],
     cover: EN('cover'),
@@ -276,7 +276,7 @@ export const projects: Project[] = [
       { label: 'Sector', value: 'Impact investment' },
       { label: 'Scope', value: 'Identity · Stationery · Campaign' },
       { label: 'Typeface', value: 'Gilroy' },
-      { label: 'Year', value: '2025' },
+      { label: 'Year', value: '2026' },
     ],
     sections: [
       {

@@ -61,18 +61,36 @@ function MoonIcon() {
 }
 
 /* ── local clock ─────────────────────────────────────────────────────── */
+function getClientTimeZone() {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || site.clock.tz;
+  } catch {
+    return site.clock.tz;
+  }
+}
+
+function getLocationLabel(timeZone: string) {
+  const parts = timeZone.replace(/_/g, ' ').split('/');
+  const name = parts[parts.length - 1] || timeZone;
+  return name.replace(/-/g, ' ');
+}
+
 export function Clock() {
-  const [time, setTime] = useState<string | null>(null);
+  const [clock, setClock] = useState<{ time: string; label: string }>({
+    time: '--:--:--',
+    label: site.clock.label,
+  });
 
   useEffect(() => {
+    const timeZone = getClientTimeZone();
     const fmt = new Intl.DateTimeFormat('en-GB', {
-      timeZone: site.clock.tz,
+      timeZone,
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
       hour12: false,
     });
-    const tick = () => setTime(fmt.format(new Date()));
+    const tick = () => setClock({ time: fmt.format(new Date()), label: getLocationLabel(timeZone) });
     tick();
 
     // Align to the next whole second, then tick on the second, so the display
@@ -93,7 +111,7 @@ export function Clock() {
     <div className="clock">
       {/* Placeholder keeps server and first client render identical (no
           hydration mismatch) and reserves the width so nothing shifts. */}
-      <span>{time ?? '--:--:--'}</span> {site.clock.label}
+      <span>{clock.time}</span> {clock.label}
     </div>
   );
 }

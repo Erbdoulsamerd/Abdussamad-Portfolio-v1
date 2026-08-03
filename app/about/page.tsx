@@ -6,10 +6,26 @@ import { ScrollProgress } from '@/components/Chrome';
 import { LineMask, Reveal } from '@/components/Motion';
 import { site } from '@/lib/site';
 
+const aboutDescription =
+  'Abdussamad Ibrahim, also known as Frostlabel, is a multidisciplinary designer in Nigeria whose practice exists at the intersection of identity, culture, objects, spaces and experiences.';
+const aboutImage = new URL('/ai-og.png?v=20260803', site.url).toString();
+
 export const metadata: Metadata = {
   title: 'About',
-  description:
-    'Abdussamad Ibrahim, also known as Flint, is a multidisciplinary designer in Nigeria whose practice exists at the intersection of identity, culture, objects, spaces and experiences.',
+  description: aboutDescription,
+  openGraph: {
+    title: 'About · Abdussamad Ibrahim',
+    description: aboutDescription,
+    url: new URL('/about', site.url).toString(),
+    type: 'website',
+    images: [{ url: aboutImage, alt: `${site.name} preview` }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About · Abdussamad Ibrahim',
+    description: aboutDescription,
+    images: [{ url: aboutImage, alt: `${site.name} preview` }],
+  },
 };
 
 const experience = [
