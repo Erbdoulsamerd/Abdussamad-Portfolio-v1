@@ -7,6 +7,7 @@ import { ScrollProgress } from '@/components/Chrome';
 import { ChapterNav, Compare, Gallery, Swatches } from '@/components/CaseParts';
 import { ClipReveal, CountUp, LineMask, Parallax, Reveal } from '@/components/Motion';
 import { getProject, nextProject, projects } from '@/lib/projects';
+import { site } from '@/lib/site';
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -19,16 +20,16 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const p = getProject(slug);
   if (!p) return {};
 
-  const coverImage = p.cover.startsWith('http') ? p.cover : new URL(p.cover, 'https://abdussamad.design').toString();
+  const coverImage = p.cover.startsWith('http') ? p.cover : new URL(p.cover, site.url).toString();
 
   return {
     title: `${p.title} · Case Study`,
     description: p.lede,
-    alternates: { canonical: `https://abdussamad.design/work/${p.slug}` },
+    alternates: { canonical: new URL(`/work/${p.slug}`, site.url).toString() },
     openGraph: {
       title: `${p.title} · Case Study`,
       description: p.lede,
-      url: `https://abdussamad.design/work/${p.slug}`,
+      url: new URL(`/work/${p.slug}`, site.url).toString(),
       type: 'article',
       images: [{ url: coverImage, alt: p.coverAlt }],
     },

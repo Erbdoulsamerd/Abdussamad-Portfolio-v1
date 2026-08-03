@@ -4,7 +4,7 @@ import { Cursor, Header, PreloadScript, SessionMark, ThemeScript } from '@/compo
 import SmoothScroll from '@/components/SmoothScroll';
 import { site } from '@/lib/site';
 
-const socialImage = 'https://abdussamad.design/ai-og.png';
+const socialImage = new URL('/ai-og.png', site.url).toString();
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),

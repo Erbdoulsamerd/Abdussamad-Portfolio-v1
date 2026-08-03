@@ -6,7 +6,7 @@ export const site = {
   region: 'Northern Nigeria',
   since: '2019',
   email: 'abdusibrahim@gmail.com',
-  url: 'https://abdussamad.design',
+  url: 'https://abdussamad.space',
   description:
     'Abdussamad Ibrahim (Flint) is a multidisciplinary designer in Nigeria working across identity, culture, objects, spaces and experiences.',
   /** Header clock. `tz` is an IANA zone; `label` is what reads after the time. */
